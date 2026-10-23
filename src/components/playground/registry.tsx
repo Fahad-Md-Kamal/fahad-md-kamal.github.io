@@ -7,6 +7,7 @@ import PasswordTool from './PasswordTool'
 import BcryptTool from './BcryptTool'
 import ChecksumTool from './ChecksumTool'
 import EncodeTool from './EncodeTool'
+import ImageBase64Tool from './ImageBase64Tool'
 import JsonTool from './JsonTool'
 import RegexTool from './RegexTool'
 import CurlTool from './CurlTool'
@@ -50,6 +51,7 @@ export const GROUPS: ToolGroup[] = [
     label: 'Data & text',
     tools: [
       { id: 'encode', label: 'Encode / decode', icon: '🔤', description: 'Base64, Base64URL, URL and hex, in both directions.', keywords: 'base64 url hex escape', component: EncodeTool },
+      { id: 'image64', label: 'Image ↔ Base64', icon: '🖼️', description: 'Turn an image into a Base64 data URI, or decode one back.', keywords: 'picture photo data uri encode embed png jpg svg', component: ImageBase64Tool },
       { id: 'json', label: 'JSON / YAML', icon: '🧾', description: 'Format, validate and convert JSON and YAML.', keywords: 'format minify validate yaml convert', component: JsonTool },
       { id: 'regex', label: 'Regex tester', icon: '🔎', description: 'Test patterns with live highlighting and capture groups.', keywords: 'regular expression match', component: RegexTool },
       { id: 'curl', label: 'cURL converter', icon: '🌐', description: 'Turn a curl command into Python or JavaScript.', keywords: 'http request python fetch requests', component: CurlTool },
