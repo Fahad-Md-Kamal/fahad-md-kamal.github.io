@@ -57,6 +57,7 @@ const renderMarkdown = (raw: string) => {
   let inList = false
   let inCode = false
   let codeBuffer = ''
+  let codeLang = ''
 
   const flushList = () => {
     if (inList) html.push('</ul>')
@@ -65,8 +66,15 @@ const renderMarkdown = (raw: string) => {
 
   const flushCode = () => {
     if (!inCode) return
-    html.push(`<pre><code>${escapeHtml(codeBuffer.replace(/\n$/,''))}</code></pre>`)
+    const source = codeBuffer.replace(/\n$/, '')
+    if (codeLang === 'mermaid') {
+      // Rendered into an SVG diagram in the browser when the post is opened.
+      html.push(`<div class="mermaid-diagram" data-mermaid="${escapeHtml(source)}"></div>`)
+    } else {
+      html.push(`<pre><code>${escapeHtml(source)}</code></pre>`)
+    }
     codeBuffer = ''
+    codeLang = ''
     inCode = false
   }
 
@@ -78,6 +86,7 @@ const renderMarkdown = (raw: string) => {
         flushList()
         inCode = true
         codeBuffer = ''
+        codeLang = line.slice(3).trim().toLowerCase()
       }
       continue
     }
@@ -155,6 +164,62 @@ export default function Blogs() {
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
   }, [])
+
+  // Turn ```mermaid blocks into diagrams. The library is loaded only when a post actually has one.
+  useEffect(() => {
+    if (!modalPost) return
+    const root = document.getElementById(`blogs-${modalPost.slug}`)
+    const nodes = root ? Array.from(root.querySelectorAll<HTMLElement>('.mermaid-diagram[data-mermaid]')) : []
+    if (!nodes.length) return
+
+    let cancelled = false
+    const showSource = (node: HTMLElement) => {
+      node.innerHTML = `<pre><code>${escapeHtml(node.dataset.mermaid ?? '')}</code></pre>`
+    }
+
+    ;(async () => {
+      try {
+        const { default: mermaid } = await import('mermaid')
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: 'strict',
+          theme: 'base',
+          themeVariables: {
+            fontFamily: 'Inter, system-ui, sans-serif',
+            primaryColor: '#16283a',
+            primaryTextColor: '#e6edf5',
+            primaryBorderColor: '#38bdf8',
+            secondaryColor: '#1b2230',
+            tertiaryColor: '#111827',
+            lineColor: '#7dd3fc',
+            textColor: '#cbd5e1',
+            edgeLabelBackground: '#0f141b',
+            clusterBkg: '#111827',
+            clusterBorder: '#334155',
+          },
+          flowchart: { curve: 'basis', htmlLabels: true },
+        })
+        for (const [index, node] of nodes.entries()) {
+          if (cancelled) return
+          try {
+            const { svg } = await mermaid.render(`mermaid-${modalPost.slug}-${index}`, node.dataset.mermaid ?? '')
+            if (!cancelled) {
+              node.innerHTML = svg
+              node.removeAttribute('data-mermaid')
+            }
+          } catch {
+            if (!cancelled) showSource(node)
+          }
+        }
+      } catch {
+        if (!cancelled) nodes.forEach(showSource)
+      }
+    })()
+
+    return () => {
+      cancelled = true
+    }
+  }, [modalPost])
 
   // Lock background scroll when modal is open
   useEffect(() => {

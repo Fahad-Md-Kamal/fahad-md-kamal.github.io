@@ -205,3 +205,20 @@
     background-size: 22px 22px, auto;
   }
 }
+
+/* Mermaid diagrams inside blog posts */
+.markdown-content .mermaid-diagram {
+  margin: 1.25rem 0;
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid hsl(var(--border) / 0.6);
+  border-radius: 0.9rem;
+  background: hsl(var(--background) / 0.5);
+  text-align: center;
+  min-height: 4rem;
+}
+
+.markdown-content .mermaid-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
