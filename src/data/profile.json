@@ -8,8 +8,9 @@
   "email": "fahadmdkamal@gmail.com",
   "phone": "+8801675759801",
   "website": "https://fahad-md-kamal.dev",
-  "avatar": "images/avatar-sketch.png",
-  "resumeUrl": "https://flowcv.com/resume/69kur1fdef",
+  "avatar": "images/avatar-sketch.webp",
+  "resumeUrl": "/Fahad-Md-Kamal-Resume.pdf",
+  "resumeFallbackUrl": "https://flowcv.com/resume/69kur1fdef",
   "contact": {
     "email": "fahadmdkamal@gmail.com",
     "phone": "+8801675759801",

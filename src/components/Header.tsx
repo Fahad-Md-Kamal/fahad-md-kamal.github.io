@@ -4,9 +4,11 @@ import { Button } from '@/components/ui/button'
 
 interface HeaderProps {
   profile: Profile
+  hasCertifications?: boolean
+  hasTestimonials?: boolean
 }
 
-export default function Header({ profile }: HeaderProps) {
+export default function Header({ profile, hasCertifications = true, hasTestimonials = false }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
 
@@ -20,14 +22,16 @@ export default function Header({ profile }: HeaderProps) {
     { label: 'About', href: '#about' },
     { label: 'Skills', href: '#skills' },
     { label: 'Projects', href: '#projects' },
+    { label: 'Services', href: '#services' },
+    ...(hasTestimonials ? [{ label: 'Reviews', href: '#testimonials' }] : []),
     { label: 'Experience', href: '#experience' },
     { label: 'Education', href: '#education' },
-    { label: 'Certifications', href: '#certifications' },
+    ...(hasCertifications ? [{ label: 'Certifications', href: '#certifications' }] : []),
     { label: 'Blog', href: '#blogs' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Playground', href: '#playground' },
   ]
 
-  const resumeLink = profile.resumeUrl || 'https://flowcv.com/resume/69kur1fdef'
+  const resumeLink = profile.resumeUrl || profile.resumeFallbackUrl || '#'
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id)
@@ -75,10 +79,16 @@ export default function Header({ profile }: HeaderProps) {
               href={resumeLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-3 inline-flex items-center rounded-xl bg-gradient-to-r from-primary to-primary/80 text-white text-sm font-medium px-4 py-2 shadow-glow hover:-translate-y-0.5 transition-all duration-200"
+              className="px-3 py-2 text-sm text-text-secondary hover:text-text-primary font-medium transition-colors"
             >
               Resume
             </a>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="ml-2 inline-flex items-center rounded-xl bg-gradient-to-r from-primary to-primary/80 text-white text-sm font-medium px-4 py-2 shadow-glow hover:-translate-y-0.5 transition-all duration-200"
+            >
+              Start a project
+            </button>
           </div>
 
           {/* Mobile trigger */}
@@ -106,10 +116,16 @@ export default function Header({ profile }: HeaderProps) {
               href={resumeLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-center rounded-xl bg-gradient-to-r from-primary to-primary/80 text-white text-sm font-medium px-4 py-2.5 mt-2"
+              className="block text-center rounded-xl border border-border/60 text-text-primary text-sm font-medium px-4 py-2.5 mt-2"
             >
               Resume
             </a>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="block w-full text-center rounded-xl bg-gradient-to-r from-primary to-primary/80 text-white text-sm font-medium px-4 py-2.5 mt-2"
+            >
+              Start a project
+            </button>
           </div>
         )}
       </nav>

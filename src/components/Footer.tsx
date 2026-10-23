@@ -126,8 +126,18 @@ export default function Footer({ profile }: FooterProps) {
                   className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm group"
                 >
                   <IconArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
-                  Resume
+                  Resume (PDF)
                 </a>
+                {profile.resumeFallbackUrl && (
+                  <a
+                    href={profile.resumeFallbackUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-text-secondary hover:text-primary transition-colors"
+                  >
+                    Online version
+                  </a>
+                )}
               </div>
             </div>
           </Reveal>

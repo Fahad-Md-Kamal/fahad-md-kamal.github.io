@@ -1,7 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Card, CardHeader, CardContent, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
+import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card'
 import type { SkillsData, SkillCategory } from '../types'
-import { useInView } from '../hooks/useInView'
 import DecodeText from './DecodeText'
 import Reveal from './Reveal'
 
@@ -15,32 +14,15 @@ interface SkillItemProps {
 }
 
 function SkillItem({ skill, index }: SkillItemProps) {
-  const { ref, inView } = useInView<HTMLDivElement>()
-
   return (
     <div
-      ref={ref}
       className="flex items-center justify-between p-3 rounded-xl border border-border/60 bg-background/30 hover:border-primary/40 hover:bg-background/50 transition-all duration-300"
       style={{ transitionDelay: `${index * 40}ms` }}
     >
-      <div className="flex items-center gap-3">
-        <DecodeText text={skill.name} delay={index * 40} className="text-text-primary text-sm font-medium" />
-        <span className="text-xs font-mono text-text-secondary">
-          {skill.years}yr{skill.years > 1 ? 's' : ''}
-        </span>
-      </div>
-      <div className="flex items-center gap-2">
-        <div className="relative w-16 h-1.5 rounded-full overflow-hidden bg-white/[0.06]">
-          <div
-            className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-primary to-secondary transition-all duration-1000 ease-out"
-            style={{
-              width: inView ? `${skill.level}%` : '0%',
-              transitionDelay: `${index * 40 + 200}ms`
-            }}
-          />
-        </div>
-        <span className="text-xs font-mono text-primary min-w-[3ch]">{inView ? `${skill.level}%` : '0%'}</span>
-      </div>
+      <DecodeText text={skill.name} delay={index * 40} className="text-text-primary text-sm font-medium" />
+      <span className="text-xs font-mono text-primary whitespace-nowrap ml-3">
+        {skill.years}+ {skill.years > 1 ? 'yrs' : 'yr'}
+      </span>
     </div>
   )
 }
@@ -77,23 +59,6 @@ function CategorySection({ category, index }: CategorySectionProps) {
         ))}
       </CardContent>
 
-      {/* Proficiency Summary */}
-      <CardFooter className="flex-col pt-6 border-t border-border/60 mt-auto">
-        <div className="grid grid-cols-3 gap-4 text-center w-full">
-          <div>
-            <DecodeText text={String(category.skills.filter(s => s.level >= 90).length)} className="text-sm font-mono font-bold text-primary" />
-            <div className="text-xs text-text-secondary font-mono">Expert</div>
-          </div>
-          <div>
-            <DecodeText text={String(category.skills.filter(s => s.level >= 70 && s.level < 90).length)} className="text-sm font-mono font-bold text-secondary" />
-            <div className="text-xs text-text-secondary font-mono">Advanced</div>
-          </div>
-          <div>
-            <DecodeText text={`${Math.round(category.skills.reduce((acc, s) => acc + s.years, 0) / category.skills.length)}yr`} className="text-sm font-mono font-bold text-text-secondary" />
-            <div className="text-xs text-text-secondary font-mono">Avg Exp</div>
-          </div>
-        </div>
-      </CardFooter>
     </Reveal>
   )
 }
@@ -125,7 +90,7 @@ export default function Skills({ skills }: SkillsProps) {
             </div>
             <DecodeText as="h2" text="Tools I reach for" className="section-title mb-4" />
             <p className="text-lg text-text-secondary max-w-3xl leading-relaxed">
-              Tools and technologies I have used in real full-stack and AI-focused projects.
+              Technologies I've used in production systems and AI-focused projects, with years of hands-on use.
             </p>
           </Reveal>
 

@@ -161,3 +161,22 @@
     @apply block p-4 rounded-xl border border-border/60 overflow-x-auto;
   }
 }
+
+/* Hero request-flow dots */
+@keyframes flow-dot {
+  0% { left: 0; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { left: calc(100% - 5px); opacity: 0; }
+}
+
+.flow-dot {
+  animation: flow-dot 2.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-dot {
+    animation: none;
+    opacity: 0;
+  }
+}

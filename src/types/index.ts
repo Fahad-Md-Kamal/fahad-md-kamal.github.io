@@ -10,6 +10,7 @@ export interface Profile {
   website: string;
   avatar: string;
   resumeUrl: string;
+  resumeFallbackUrl?: string;
   contact: {
     email: string;
     phone: string;
@@ -99,6 +100,7 @@ export interface EducationData {
 
 export interface Certification {
   id: string;
+  hidden?: boolean;
   name: string;
   issuer?: string;
   score?: string;
@@ -170,4 +172,42 @@ export interface ProjectsData {
   projects: Project[];
   aiProjects?: Project[];
   categories: ProjectCategory[];
+}
+
+export interface Service {
+  id: string;
+  icon: string;
+  title: string;
+  forWho: string;
+  summary: string;
+  includes: string[];
+  tech: string[];
+}
+
+export interface ProcessStep {
+  step: string;
+  title: string;
+  description: string;
+}
+
+export interface ServicesData {
+  headline: string;
+  intro: string;
+  services: Service[];
+  process: ProcessStep[];
+  engagements: string[];
+}
+
+export interface Testimonial {
+  id: string;
+  quote: string;
+  name: string;
+  role: string;
+  company?: string;
+  source?: string;
+  link?: string;
+}
+
+export interface TestimonialsData {
+  testimonials: Testimonial[];
 }

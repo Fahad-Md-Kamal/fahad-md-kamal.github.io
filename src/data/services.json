@@ -1,0 +1,55 @@
+{
+  "headline": "Backends, AI features and code cleanup for products that need to work in production",
+  "intro": "I take on a small number of projects at a time, so each one gets real attention. Here's what I can help with.",
+  "services": [
+    {
+      "id": "api",
+      "icon": "🧩",
+      "title": "Backend & API development",
+      "forWho": "Founders and teams who need a reliable backend for a web or mobile product",
+      "summary": "Clean REST APIs in Django REST Framework or FastAPI (Go when it fits), built to be tested, documented and easy to hand over.",
+      "includes": [
+        "Endpoint design and PostgreSQL data model",
+        "Authentication, roles and permissions",
+        "Automated tests and API documentation",
+        "Docker-ready delivery"
+      ],
+      "tech": ["Django REST", "FastAPI", "PostgreSQL", "Docker"]
+    },
+    {
+      "id": "ai",
+      "icon": "🤖",
+      "title": "AI chatbots & document intelligence",
+      "forWho": "Teams with lots of documents who want answers they can trust",
+      "summary": "Chatbots that answer from your own documents and cite their sources, built on OpenAI, Azure OpenAI or Claude, with honest accuracy testing.",
+      "includes": [
+        "Search and answers over PDFs, docs and transcripts",
+        "Source citations and clear \"I don't know\" behaviour",
+        "API or chat widget you can plug into your product",
+        "Cost estimate and setup guide"
+      ],
+      "tech": ["LangChain", "RAG", "OpenAI", "Claude"]
+    },
+    {
+      "id": "cleanup",
+      "icon": "🧹",
+      "title": "AI-generated code cleanup",
+      "forWho": "Makers who built a product with AI tools and now need it to be maintainable",
+      "summary": "I review, restructure and secure code written with ChatGPT, Claude or Cursor, so it can be extended and handed to other developers.",
+      "includes": [
+        "Code audit with prioritized findings",
+        "Restructuring, dead-code and dependency cleanup",
+        "Security fixes and tests for critical paths",
+        "README and architecture notes"
+      ],
+      "tech": ["Python", "Go", "TypeScript", "Code review"]
+    }
+  ],
+  "process": [
+    { "step": "01", "title": "Discuss", "description": "We agree on the goal, scope and what \"done\" looks like." },
+    { "step": "02", "title": "Plan", "description": "A short written plan with milestones and a fair estimate." },
+    { "step": "03", "title": "Build", "description": "Working demos at each milestone, with regular written updates." },
+    { "step": "04", "title": "Hand over", "description": "Tested code, documentation and a walkthrough." }
+  ],
+  "engagements": ["Fixed-price project", "Hourly", "Monthly retainer"]
+}

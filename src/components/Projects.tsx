@@ -160,59 +160,62 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
           </Button>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-8">
           {project.context && (
-            <div className="p-3 bg-background border-l-2 border-secondary rounded-r">
-              <div className="text-xs font-mono uppercase tracking-wider text-secondary mb-1">
-                <DecodeText text="Context" />
+            <div>
+              <div className="text-xs font-mono uppercase tracking-wider text-secondary mb-2">
+                <DecodeText text="The challenge" />
               </div>
-              <p className="text-sm text-text-secondary leading-relaxed">{project.context}</p>
+              <p className="text-text-primary leading-relaxed">{project.context}</p>
             </div>
           )}
 
-          {project.architecture && (
-            <div>
-              <div className="text-xs font-mono uppercase tracking-wider text-primary mb-3 flex items-center gap-2">
-                <DecodeText text="Architecture" />
-                <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
-              </div>
-              <div className="grid grid-cols-2 gap-3 text-sm">
-                <div>
-                  <span className="text-text-secondary">Pattern:</span>
-                  <DecodeText text={project.architecture.pattern} className="font-mono text-text-primary block" />
-                </div>
-                <div>
-                  <span className="text-text-secondary">Scale:</span>
-                  <DecodeText text={project.architecture.scale} className="font-mono text-primary block" />
-                </div>
-                <div className="col-span-2">
-                  <span className="text-text-secondary">Infrastructure:</span>
-                  <DecodeText text={project.architecture.infrastructure} className="font-mono text-text-primary block" />
-                </div>
-              </div>
+          <div>
+            <div className="text-xs font-mono uppercase tracking-wider text-secondary mb-2">
+              <DecodeText text="What I built" />
             </div>
-          )}
+            <p className="text-text-secondary leading-relaxed">{project.description}</p>
+          </div>
 
           {project.impact && (
             <div>
               <div className="text-xs font-mono uppercase tracking-wider text-primary mb-3 flex items-center gap-2">
-                <DecodeText text="Impact" />
+                <DecodeText text="Results" />
                 <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="grid sm:grid-cols-2 gap-3">
                 {Object.entries(project.impact).map(([key, value], i) => (
-                  <Reveal key={key} delay={i * 60} className="text-center p-2 rounded-xl border border-border/60 bg-background/40">
-                    <DecodeText text={value || ''} className="text-sm font-mono font-bold text-primary block" />
-                    <div className="text-xs text-text-secondary capitalize">{key.replace('_', ' ')}</div>
+                  <Reveal key={key} delay={i * 60} className="p-4 rounded-xl border border-border/60 bg-background/40">
+                    <div className="text-xs font-mono uppercase tracking-wider text-primary mb-1">
+                      {key.replace(/_/g, ' ')}
+                    </div>
+                    <p className="text-sm text-text-primary leading-relaxed">{value}</p>
                   </Reveal>
                 ))}
               </div>
             </div>
           )}
 
+          {project.design_decisions && (
+            <div>
+              <div className="text-xs font-mono uppercase tracking-wider text-secondary mb-3 flex items-center gap-2">
+                <DecodeText text="Key decisions" />
+                <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
+              </div>
+              <ul className="text-sm text-text-secondary space-y-2">
+                {project.design_decisions.map((decision, index) => (
+                  <li key={index} className="flex items-start gap-2">
+                    <span className="text-primary mt-1.5">•</span>
+                    <span>{decision}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div>
             <div className="text-xs font-mono uppercase tracking-wider text-primary mb-3 flex items-center gap-2">
-              <DecodeText text="Tech Stack" />
+              <DecodeText text="Tech stack" />
               <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -233,22 +236,41 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             </div>
           </div>
 
-          {project.design_decisions && (
-            <div>
-              <div className="text-xs font-mono uppercase tracking-wider text-secondary mb-3 flex items-center gap-2">
-                <DecodeText text="Design Decisions" />
-                <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
+          {project.architecture && (
+            <details className="group rounded-xl border border-border/60 bg-background/40 open:bg-background/60">
+              <summary className="cursor-pointer select-none px-4 py-3 text-xs font-mono uppercase tracking-wider text-primary flex items-center justify-between">
+                Architecture details
+                <span className="transition-transform group-open:rotate-90" aria-hidden="true">›</span>
+              </summary>
+              <div className="grid sm:grid-cols-2 gap-3 text-sm px-4 pb-4">
+                <div>
+                  <span className="text-text-secondary">Pattern:</span>
+                  <div className="font-mono text-text-primary">{project.architecture.pattern}</div>
+                </div>
+                <div>
+                  <span className="text-text-secondary">Scale:</span>
+                  <div className="font-mono text-primary">{project.architecture.scale}</div>
+                </div>
+                <div className="sm:col-span-2">
+                  <span className="text-text-secondary">Infrastructure:</span>
+                  <div className="font-mono text-text-primary">{project.architecture.infrastructure}</div>
+                </div>
               </div>
-              <ul className="text-sm text-text-secondary space-y-2">
-                {project.design_decisions.map((decision, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <span className="text-primary mt-1.5">•</span>
-                    <span>{decision}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </details>
           )}
+
+          <div className="rounded-xl border border-primary/30 bg-gradient-to-br from-primary/10 to-secondary/10 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <p className="text-sm text-text-primary">Need something similar built for your product?</p>
+            <Button
+              size="sm"
+              onClick={() => {
+                onClose()
+                setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 50)
+              }}
+            >
+              Let's talk
+            </Button>
+          </div>
         </div>
 
         {/* Action Links */}

@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { IconGithub, IconLinkedin, IconX, IconMail, IconMapPin, IconArrowDown } from '@/components/icons'
 import DecodeText from './DecodeText'
+import RequestFlow from './RequestFlow'
 interface HeroProps {
   profile: Profile
   projectCount: number
@@ -65,11 +66,8 @@ export default function Hero({ profile, projectCount }: HeroProps) {
     return () => clearTimeout(timer)
   }, [displayedText, currentIndex, isDeleting, techStack])
 
-  const scrollToProjects = () => {
-    const element = document.getElementById('projects')
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -137,6 +135,8 @@ export default function Hero({ profile, projectCount }: HeroProps) {
             </div>
           </div>
 
+          <RequestFlow />
+
           {/* Key Metrics - Signal Dense */}
           <div className="grid grid-cols-2 gap-3 sm:gap-6 mb-8 sm:mb-12 animate-slide-up px-4" style={{ animationDelay: '0.2s' }}>
             <Card className="card-hover">
@@ -165,26 +165,25 @@ export default function Hero({ profile, projectCount }: HeroProps) {
             </Card>
           </div>
 
-          {/* Contact Links - Clean and Professional */}
-          <div className="flex flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-12 animate-slide-up px-4" style={{ animationDelay: '0.4s' }}>
-            <Button
-              onClick={scrollToProjects}
-              size="lg"
-              className="w-full sm:w-auto"
-            >
-              View Systems
+          {/* Calls to action */}
+          <div className="flex flex-wrap gap-3 sm:gap-4 justify-center mb-8 sm:mb-12 animate-slide-up px-4" style={{ animationDelay: '0.4s' }}>
+            <Button onClick={() => scrollToSection('contact')} size="lg" className="w-full sm:w-auto">
+              Start a project
+            </Button>
+            <Button onClick={() => scrollToSection('projects')} size="lg" variant="outline" className="flex-1 sm:flex-none sm:w-auto">
+              View my work
             </Button>
             <Button
               asChild
               href={profile.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              variant="outline"
+              variant="ghost"
               size="lg"
-              className="w-full sm:w-auto"
+              className="flex-1 sm:flex-none sm:w-auto"
             >
               <span className="flex items-center gap-2">
-                View Resume
+                Resume
                 <IconArrowDown className="w-4 h-4" />
               </span>
             </Button>
