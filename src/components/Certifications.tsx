@@ -78,7 +78,7 @@ export default function Certifications({ certifications }: CertificationsProps) 
   if (!certifications.certifications.length) return null
 
   return (
-    <section id="certifications" className="py-20 md:py-28 bg-surface/90">
+    <section id="certifications" className="py-20 md:py-28 bg-background/85 section-glow [--glow:38_92%_50%] [--glow-x:50%] [--glow-y:0%]">
       <div className="section-container">
         <div className="max-w-4xl mx-auto">
           <Reveal className="mb-16">

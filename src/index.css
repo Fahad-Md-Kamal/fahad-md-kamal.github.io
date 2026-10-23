@@ -180,3 +180,28 @@
     opacity: 0;
   }
 }
+
+/* Section backdrops: each section gets its own soft colored glow and a thin divider,
+   so neighbouring sections never blend together. Set --glow (an "H S% L%" triplet),
+   --glow-x and --glow-y per section. */
+@layer components {
+  .section-glow {
+    border-top: 1px solid hsl(var(--border) / 0.45);
+    background-image: radial-gradient(
+      56rem 30rem at var(--glow-x, 0%) var(--glow-y, 0%),
+      hsl(var(--glow, var(--primary)) / 0.1),
+      transparent 70%
+    );
+  }
+
+  /* Playground: darker "workbench" with a dot grid, clearly different from the sections around it. */
+  .section-workbench {
+    border-top: 1px solid hsl(var(--primary) / 0.25);
+    border-bottom: 1px solid hsl(var(--primary) / 0.25);
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(hsl(var(--text-primary) / 0.09) 1px, transparent 1px),
+      radial-gradient(60rem 28rem at 50% 0%, hsl(var(--primary) / 0.1), transparent 70%);
+    background-size: 22px 22px, auto;
+  }
+}

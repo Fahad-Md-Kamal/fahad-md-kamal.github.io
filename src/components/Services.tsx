@@ -16,7 +16,7 @@ export default function Services({ services, profile }: ServicesProps) {
   }
 
   return (
-    <section id="services" className="py-20 md:py-28 bg-surface/90">
+    <section id="services" className="py-20 md:py-28 bg-background/85 section-glow [--glow:160_84%_39%] [--glow-x:0%] [--glow-y:100%]">
       <div className="section-container">
         <div className="max-w-6xl mx-auto">
           <Reveal className="mb-16">

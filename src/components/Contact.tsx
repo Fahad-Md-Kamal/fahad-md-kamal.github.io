@@ -95,7 +95,7 @@ export default function Contact({ profile }: ContactProps) {
   ]
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-background/85">
+    <section id="contact" className="py-20 md:py-28 bg-surface/90 section-glow [--glow-x:50%] [--glow-y:100%]">
       <div className="section-container">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}

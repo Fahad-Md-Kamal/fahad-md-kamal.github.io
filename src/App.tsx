@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 import AmbientBackground from './components/AmbientBackground'
 import Header from './components/Header'
 import Hero from './components/Hero'
@@ -15,7 +15,9 @@ import ScrollToTop from './components/ScrollToTop'
 import Blogs from './components/Blogs'
 import Services from './components/Services'
 import Testimonials from './components/Testimonials'
-import HashTool from './components/HashTool'
+
+// The Playground and its tools load on demand so the main page stays light.
+const Playground = lazy(() => import('./components/Playground'))
 
 // Import data
 import profileData from './data/profile.json'
@@ -75,7 +77,9 @@ function App() {
         {hasCertifications && <Certifications certifications={visibleCertifications} />}
         <GithubActivity profile={profile} />
         <Blogs />
-        <HashTool />
+        <Suspense fallback={<div id="playground" className="min-h-[24rem]" />}>
+          <Playground />
+        </Suspense>
         <Contact profile={profile} />
       </main>
       

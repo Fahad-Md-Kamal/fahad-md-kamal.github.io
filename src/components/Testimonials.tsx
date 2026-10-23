@@ -13,7 +13,7 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
   if (!items.length) return null
 
   return (
-    <section id="testimonials" className="py-20 md:py-28 bg-background/85">
+    <section id="testimonials" className="py-20 md:py-28 bg-surface/90 section-glow [--glow:340_82%_60%] [--glow-x:100%] [--glow-y:0%]">
       <div className="section-container">
         <div className="max-w-6xl mx-auto">
           <Reveal className="mb-12">

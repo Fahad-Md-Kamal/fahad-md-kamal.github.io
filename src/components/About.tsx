@@ -42,7 +42,7 @@ export default function About({ profile, projectCount }: AboutProps) {
   ]
 
   return (
-    <section id="about" className="py-20 md:py-28 bg-surface/90">
+    <section id="about" className="py-20 md:py-28 bg-surface/90 section-glow [--glow-x:0%] [--glow-y:0%]">
       <div className="section-container">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}

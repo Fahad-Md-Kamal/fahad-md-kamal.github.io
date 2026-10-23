@@ -172,7 +172,7 @@ export default function Blogs() {
   if (!posts.length) return null
 
   return (
-    <section id="blogs" className="py-20 md:py-28 bg-surface/90">
+    <section id="blogs" className="py-20 md:py-28 bg-background/85 section-glow [--glow:340_82%_60%] [--glow-x:50%] [--glow-y:100%]">
       <div className="section-container">
         <div className="max-w-6xl mx-auto">
           <Reveal className="mb-12">

@@ -82,11 +82,14 @@ function md5(input: Uint8Array): Uint8Array {
   return out
 }
 
-export async function digest(algorithm: HashAlgorithm, text: string): Promise<Uint8Array> {
-  const bytes = new TextEncoder().encode(text)
+export async function digestBytes(algorithm: HashAlgorithm, bytes: Uint8Array): Promise<Uint8Array> {
   if (algorithm === 'MD5') return md5(bytes)
-  const result = await crypto.subtle.digest(algorithm, bytes)
+  const result = await crypto.subtle.digest(algorithm, bytes as BufferSource)
   return new Uint8Array(result)
+}
+
+export function digest(algorithm: HashAlgorithm, text: string): Promise<Uint8Array> {
+  return digestBytes(algorithm, new TextEncoder().encode(text))
 }
 
 export function formatDigest(bytes: Uint8Array, format: HashFormat): string {
@@ -97,4 +100,20 @@ export function formatDigest(bytes: Uint8Array, format: HashFormat): string {
   }
   const hex = Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('')
   return format === 'HEX' ? hex.toUpperCase() : hex
+}
+
+export const HMAC_ALGORITHMS = ALGORITHMS.filter(a => a.id !== 'MD5')
+
+// HMAC is provided by Web Crypto for the SHA family (MD5 is not offered).
+export async function hmacDigest(algorithm: Exclude<HashAlgorithm, 'MD5'>, key: string, message: string): Promise<Uint8Array> {
+  const encoder = new TextEncoder()
+  const cryptoKey = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(key),
+    { name: 'HMAC', hash: algorithm },
+    false,
+    ['sign'],
+  )
+  const signature = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(message))
+  return new Uint8Array(signature)
 }

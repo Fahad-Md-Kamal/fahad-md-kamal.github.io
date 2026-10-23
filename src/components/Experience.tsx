@@ -175,7 +175,7 @@ export default function Experience({ experience, profile }: ExperienceProps) {
   ]
 
   return (
-    <section id="experience" className="py-20 md:py-28 bg-background/85">
+    <section id="experience" className="py-20 md:py-28 bg-background/85 section-glow [--glow:var(--secondary)] [--glow-x:0%] [--glow-y:0%]">
       <div className="section-container">
         <div className="max-w-4xl mx-auto">
           {/* Section Header */}

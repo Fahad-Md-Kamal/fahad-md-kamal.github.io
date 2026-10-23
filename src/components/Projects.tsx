@@ -329,7 +329,7 @@ export default function Projects({ projects }: ProjectsProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
   return (
-    <section id="projects" className="py-20 md:py-28 bg-background/85">
+    <section id="projects" className="py-20 md:py-28 bg-surface/90 section-glow [--glow-x:50%] [--glow-y:0%]">
       <div className="section-container">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
