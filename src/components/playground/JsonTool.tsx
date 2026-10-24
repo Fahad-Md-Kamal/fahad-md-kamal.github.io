@@ -67,7 +67,7 @@ export default function JsonTool() {
   const spaces = Number(indent)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <div className="flex items-center justify-between mb-2">
           <FieldLabel htmlFor="json-input">JSON or YAML</FieldLabel>
@@ -122,7 +122,7 @@ export default function JsonTool() {
       </div>
 
       {error && <ErrorText>{error}</ErrorText>}
-      {info && <p className="text-sm font-mono text-green-400" role="status">{info}</p>}
+      {info && <p className="text-[13px] sm:text-sm font-mono text-green-400" role="status">{info}</p>}
       {output && <ResultBox label={outputLabel} value={output} />}
 
       <Note title="Tip.">

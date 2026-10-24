@@ -63,7 +63,7 @@ function LongOutput({ label, value }: { label: string; value: string }) {
         </div>
         <CopyButton text={value} />
       </div>
-      <output className="block rounded-xl border border-border/60 bg-background/60 px-4 py-3 text-sm font-mono text-text-primary break-all">
+      <output className="block rounded-xl border border-border/60 bg-background/60 px-4 py-3 text-[13px] sm:text-sm font-mono text-text-primary break-all">
         {shown}
       </output>
       {value.length > PREVIEW_CHARS && (
@@ -175,7 +175,7 @@ export default function ImageBase64Tool() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <Segmented
         label="Direction"
         value={mode}
@@ -193,7 +193,7 @@ export default function ImageBase64Tool() {
               dragging ? 'border-primary bg-primary/10' : 'border-border/60 bg-background/40'
             }`}
           >
-            <p className="text-sm text-text-secondary mb-3">Drop an image here, or choose one. It is read locally and never uploaded.</p>
+            <p className="text-[13px] sm:text-sm text-text-secondary mb-3">Drop an image here, or choose one. It is read locally and never uploaded.</p>
             <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={e => choose(e.target.files?.[0])} />
             <Button type="button" variant="outline" onClick={() => inputRef.current?.click()}>Choose image</Button>
           </div>
@@ -201,7 +201,7 @@ export default function ImageBase64Tool() {
           {error && <ErrorText>{error}</ErrorText>}
 
           {dataUri && fileInfo && (
-            <div className="space-y-5">
+            <div className="space-y-4 sm:space-y-5">
               <div className="flex flex-wrap items-center gap-4 rounded-xl border border-border/60 bg-background/40 p-4">
                 <img
                   src={dataUri}
@@ -209,7 +209,7 @@ export default function ImageBase64Tool() {
                   onLoad={e => setDimensions({ w: e.currentTarget.naturalWidth, h: e.currentTarget.naturalHeight })}
                   className="h-20 w-20 object-contain rounded-lg bg-white/5 border border-border/60"
                 />
-                <div className="text-sm font-mono min-w-0">
+                <div className="text-[13px] sm:text-sm font-mono min-w-0">
                   <div className="text-text-primary break-all">{fileInfo.name}</div>
                   <div className="text-text-secondary">
                     {dimensions ? `${dimensions.w}×${dimensions.h} px · ` : ''}file {formatSize(fileInfo.size)} → Base64 {formatSize(base64.length)}

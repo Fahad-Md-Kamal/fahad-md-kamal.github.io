@@ -39,7 +39,7 @@ export default function CronTool() {
   const localZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <FieldLabel htmlFor="cron-input">Cron expression</FieldLabel>
         <input
@@ -61,7 +61,7 @@ export default function CronTool() {
             key={preset.value}
             type="button"
             onClick={() => setExpression(preset.value)}
-            className="rounded-lg border border-border/60 px-3 py-1.5 text-xs font-mono text-text-secondary hover:border-primary/40 hover:text-primary transition-colors"
+            className="rounded-lg border border-border/60 px-3 py-1.5 max-sm:min-h-9 text-xs font-mono text-text-secondary hover:border-primary/40 hover:text-primary transition-colors"
           >
             {preset.label}
           </button>
@@ -91,13 +91,13 @@ export default function CronTool() {
               />
             </div>
             {result.runs.length > 0 ? (
-              <ol className="space-y-1 text-sm font-mono text-text-secondary">
+              <ol className="space-y-1 text-[13px] sm:text-sm font-mono text-text-secondary">
                 {result.runs.map(run => (
                   <li key={run.getTime()}>{formatRun(run, zone === 'utc')}</li>
                 ))}
               </ol>
             ) : (
-              <p className="text-sm text-text-secondary">This expression doesn&apos;t match any date in the next several years.</p>
+              <p className="text-[13px] sm:text-sm text-text-secondary">This expression doesn&apos;t match any date in the next several years.</p>
             )}
           </div>
         </>

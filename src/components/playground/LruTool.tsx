@@ -108,7 +108,7 @@ export default function LruTool() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <FieldLabel htmlFor="lru-capacity">Cache capacity: {capacity}</FieldLabel>
         <input id="lru-capacity" type="range" min={2} max={8} value={capacity} onChange={e => changeCapacity(Number(e.target.value))} className="w-full accent-[hsl(var(--primary))]" />
@@ -143,7 +143,7 @@ export default function LruTool() {
             return (
               <div
                 key={i}
-                className={`flex-1 min-w-[4.5rem] rounded-xl border px-2 py-3 text-center font-mono text-sm transition-colors ${
+                className={`flex-1 min-w-[4.5rem] rounded-xl border px-2 py-3 text-center font-mono text-[13px] sm:text-sm transition-colors ${
                   entry
                     ? entry.key === touched
                       ? 'border-primary bg-primary/15 text-text-primary'
@@ -166,7 +166,7 @@ export default function LruTool() {
       </div>
 
       {log.length > 0 && (
-        <ul className="space-y-1 text-sm font-mono" aria-live="polite">
+        <ul className="space-y-1 text-[13px] sm:text-sm font-mono" aria-live="polite">
           {log.map(line => (
             <li key={line.id} className={COLORS[line.kind]}>{line.text}</li>
           ))}

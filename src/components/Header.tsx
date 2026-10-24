@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import type { Profile } from '../types'
 import { Button } from '@/components/ui/button'
+import { createPortal } from 'react-dom'
+import { IconMenu, IconClose, IconHome, IconFolder, IconBriefcase, IconTerminal, IconGrid } from './icons'
 
 interface HeaderProps {
   profile: Profile
@@ -11,12 +13,55 @@ interface HeaderProps {
 export default function Header({ profile, hasCertifications = true, hasTestimonials = false }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [isMoreOpen, setIsMoreOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('hero')
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Highlight the bottom-bar tab for the section crossing the upper-middle of the screen.
+  // Looked up on every scroll because lazy sections replace their placeholder element.
+  useEffect(() => {
+    const ids = ['hero', 'about', 'skills', 'projects', 'services', 'testimonials', 'experience', 'education', 'certifications', 'github', 'blogs', 'playground', 'contact']
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const line = window.innerHeight * 0.4
+      let current = 'hero'
+      for (const id of ids) {
+        const el = document.getElementById(id)
+        if (el && el.getBoundingClientRect().top <= line) current = id
+      }
+      setActiveSection(current)
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [])
+
+  // "More" sheet: lock page scroll behind it and let Escape close it.
+  useEffect(() => {
+    if (!isMoreOpen) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setIsMoreOpen(false)
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = prevOverflow
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [isMoreOpen])
 
   const navLinks = [
     { label: 'About', href: '#about' },
@@ -38,8 +83,18 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' })
       setIsMobileOpen(false)
+      setIsMoreOpen(false)
     }
   }
+
+  const primarySections = ['hero', 'projects', 'experience', 'playground']
+  const tabs = [
+    { label: 'Home', Icon: IconHome, active: activeSection === 'hero', onClick: () => scrollToSection('hero') },
+    { label: 'Projects', Icon: IconFolder, active: activeSection === 'projects', onClick: () => scrollToSection('projects') },
+    { label: 'Experience', Icon: IconBriefcase, active: activeSection === 'experience', onClick: () => scrollToSection('experience') },
+    { label: 'Playground', Icon: IconTerminal, active: activeSection === 'playground', onClick: () => scrollToSection('playground') },
+    { label: 'More', Icon: IconGrid, active: isMoreOpen || !primarySections.includes(activeSection), onClick: () => setIsMoreOpen(true) },
+  ]
 
   return (
     <header
@@ -64,7 +119,7 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
           </button>
 
           {/* Desktop */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden xl:flex items-center gap-1">
             {navLinks.map(link => (
               <button
                 key={link.label}
@@ -92,16 +147,22 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
           </div>
 
           {/* Mobile trigger */}
-          <div className="md:hidden">
-            <Button variant="outline" size="sm" onClick={() => setIsMobileOpen(o => !o)}>
-              {isMobileOpen ? 'Close' : 'Menu'}
+          <div className="hidden md:block xl:hidden">
+            <Button
+              variant="outline"
+              size="icon"
+              aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={isMobileOpen}
+              onClick={() => setIsMobileOpen(o => !o)}
+            >
+              {isMobileOpen ? <IconClose /> : <IconMenu />}
             </Button>
           </div>
         </div>
 
         {/* Mobile menu */}
         {isMobileOpen && (
-          <div className="md:hidden mt-2 mb-4 space-y-1 glass rounded-2xl border border-border/60 p-2 shadow-soft">
+          <div className="hidden md:block xl:hidden mt-2 mb-4 space-y-1 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain glass rounded-2xl border border-border/60 p-2 shadow-soft">
             {navLinks.map(link => (
               <Button
                 key={link.label}
@@ -129,6 +190,99 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
           </div>
         )}
       </nav>
+
+      {/* Phones: bottom tab bar */}
+      {createPortal(
+      <nav
+        aria-label="Main"
+        className="md:hidden fixed bottom-0 inset-x-0 z-40 glass border-t border-border/60 pb-[env(safe-area-inset-bottom)]"
+      >
+        <ul className="grid grid-cols-5">
+          {tabs.map(tab => {
+            const active = tab.active
+            return (
+              <li key={tab.label}>
+                <button
+                  type="button"
+                  onClick={tab.onClick}
+                  aria-current={active ? 'true' : undefined}
+                  className={`relative w-full h-16 flex flex-col items-center justify-center gap-1 text-[11px] font-medium transition-colors ${
+                    active ? 'text-primary' : 'text-text-secondary active:text-text-primary'
+                  }`}
+                >
+                  {active && <span className="absolute top-0 h-0.5 w-8 rounded-full bg-primary" aria-hidden="true" />}
+                  <tab.Icon width={22} height={22} />
+                  {tab.label}
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>,
+      document.body
+      )}
+
+      {isMoreOpen &&
+        createPortal(
+          <div className="md:hidden fixed inset-0 z-[60]" role="dialog" aria-modal="true" aria-label="All sections">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={() => setIsMoreOpen(false)} />
+            <div className="absolute inset-x-0 bottom-0 max-h-[82dvh] flex flex-col rounded-t-3xl border-t border-border/60 bg-card shadow-[0_-20px_50px_-15px_rgba(0,0,0,0.6)] animate-sheet-up pb-[env(safe-area-inset-bottom)]">
+              <div className="shrink-0 pt-2.5 pb-1 flex justify-center" aria-hidden="true">
+                <span className="h-1 w-10 rounded-full bg-border" />
+              </div>
+              <div className="shrink-0 flex items-center justify-between px-5 pb-3">
+                <h3 className="font-display font-semibold text-text-primary">Jump to</h3>
+                <button
+                  type="button"
+                  onClick={() => setIsMoreOpen(false)}
+                  aria-label="Close"
+                  className="w-9 h-9 -mr-2 flex items-center justify-center rounded-full text-text-secondary hover:bg-white/[0.06]"
+                >
+                  <IconClose />
+                </button>
+              </div>
+              <div className="overflow-y-auto overscroll-contain border-t border-border/60 p-3">
+                <ul className="grid grid-cols-2 gap-2">
+                  {navLinks.map(link => {
+                    const active = activeSection === link.href.slice(1)
+                    return (
+                      <li key={link.label}>
+                        <button
+                          type="button"
+                          onClick={() => scrollToSection(link.href.slice(1))}
+                          aria-current={active ? 'true' : undefined}
+                          className={`w-full min-h-12 rounded-xl border px-3 py-2.5 text-left text-sm font-medium transition-colors ${
+                            active
+                              ? 'border-primary/60 bg-primary/10 text-text-primary'
+                              : 'border-border/60 text-text-secondary active:bg-white/[0.06]'
+                          }`}
+                        >
+                          {link.label}
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
+                <a
+                  href={resumeLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-center rounded-xl border border-border/60 text-text-primary text-sm font-medium px-4 py-3 mt-3"
+                >
+                  Resume
+                </a>
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('contact')}
+                  className="block w-full text-center rounded-xl bg-gradient-to-r from-primary to-primary/80 text-white text-sm font-medium px-4 py-3 mt-2"
+                >
+                  Start a project
+                </button>
+              </div>
+            </div>
+          </div>,
+          document.body
+        )}
     </header>
   )
 }

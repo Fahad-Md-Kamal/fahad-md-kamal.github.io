@@ -58,7 +58,7 @@ export default function TimeTool() {
   const localZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div className="rounded-xl border border-border/60 bg-background/40 p-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <div className="text-xs font-mono uppercase tracking-wider text-primary">Current Unix time</div>
@@ -87,11 +87,11 @@ export default function TimeTool() {
       </div>
 
       {input.trim() && !date && (
-        <p className="text-sm text-red-400" role="alert">Couldn&apos;t read that as a timestamp or date.</p>
+        <p className="text-[13px] sm:text-sm text-red-400" role="alert">Couldn&apos;t read that as a timestamp or date.</p>
       )}
 
       {date && (
-        <div className="space-y-5">
+        <div className="space-y-4 sm:space-y-5">
           <ResultBox label="Unix seconds" value={String(Math.floor(date.getTime() / 1000))} />
           <ResultBox label="Unix milliseconds" value={String(date.getTime())} />
           <ResultBox label="ISO 8601 (UTC)" value={date.toISOString()} />
@@ -99,7 +99,7 @@ export default function TimeTool() {
             <div className="text-xs font-mono uppercase tracking-wider text-primary mb-2">Same moment in other zones</div>
             <div className="rounded-xl border border-border/60 divide-y divide-border/60 overflow-hidden">
               {[localZone, ...ZONES.filter(z => z !== localZone)].map(zone => (
-                <div key={zone} className="flex flex-wrap items-center justify-between gap-2 px-4 py-2 text-sm bg-background/40">
+                <div key={zone} className="flex flex-wrap items-center justify-between gap-2 px-4 py-2 text-[13px] sm:text-sm bg-background/40">
                   <span className="font-mono text-text-secondary">{zone === localZone ? `${zone} (you)` : zone}</span>
                   <span className="font-mono text-text-primary">{inZone(date, zone)}</span>
                 </div>

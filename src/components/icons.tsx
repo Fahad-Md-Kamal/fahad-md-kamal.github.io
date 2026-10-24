@@ -93,3 +93,56 @@ export const IconAlertCircle = (props: IconProps) => (
     <path d="M12 8v5M12 16v.01" />
   </svg>
 )
+
+export const IconMenu = (props: IconProps) => (
+  <svg {...base(props)}>
+    <path d="M4 7h16" />
+    <path d="M4 12h16" />
+    <path d="M4 17h16" />
+  </svg>
+)
+
+export const IconClose = (props: IconProps) => (
+  <svg {...base(props)}>
+    <path d="m6 6 12 12" />
+    <path d="m18 6-12 12" />
+  </svg>
+)
+
+export const IconHome = (props: IconProps) => (
+  <svg {...base(props)}>
+    <path d="m3 11 9-7.5 9 7.5" />
+    <path d="M5.5 9.5V20a1 1 0 0 0 1 1H10v-6h4v6h3.5a1 1 0 0 0 1-1V9.5" />
+  </svg>
+)
+
+export const IconFolder = (props: IconProps) => (
+  <svg {...base(props)}>
+    <path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5v-12Z" />
+  </svg>
+)
+
+export const IconBriefcase = (props: IconProps) => (
+  <svg {...base(props)}>
+    <rect x="3" y="7" width="18" height="13" rx="2" />
+    <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+    <path d="M3 13h18" />
+  </svg>
+)
+
+export const IconTerminal = (props: IconProps) => (
+  <svg {...base(props)}>
+    <rect x="3" y="4.5" width="18" height="15" rx="2" />
+    <path d="m7.5 10 3 2.5-3 2.5" />
+    <path d="M13 15h3.5" />
+  </svg>
+)
+
+export const IconGrid = (props: IconProps) => (
+  <svg {...base(props)}>
+    <rect x="4" y="4" width="6.5" height="6.5" rx="1.5" />
+    <rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5" />
+    <rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5" />
+    <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" />
+  </svg>
+)

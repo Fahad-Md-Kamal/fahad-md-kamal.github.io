@@ -24,7 +24,7 @@ export default function CurlTool() {
   }, [command, target])
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <FieldLabel htmlFor="curl-input">cURL command</FieldLabel>
         <textarea
@@ -47,7 +47,7 @@ export default function CurlTool() {
 
       {result?.error && <ErrorText>{result.error}</ErrorText>}
       {result?.warnings.map(warning => (
-        <p key={warning} className="text-sm text-amber-400 font-mono">⚠ {warning}</p>
+        <p key={warning} className="text-[13px] sm:text-sm text-amber-400 font-mono">⚠ {warning}</p>
       ))}
       {result?.code && <ResultBox label={target === 'python' ? 'Python' : 'JavaScript'} value={result.code} />}
 

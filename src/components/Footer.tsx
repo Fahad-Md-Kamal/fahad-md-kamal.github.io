@@ -123,7 +123,7 @@ export default function Footer({ profile }: FooterProps) {
                   href={profile.resumeUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm group"
+                  className="flex w-fit items-center gap-2 py-1.5 text-primary hover:text-primary/80 transition-colors text-sm group"
                 >
                   <IconArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
                   Resume (PDF)
@@ -133,7 +133,7 @@ export default function Footer({ profile }: FooterProps) {
                     href={profile.resumeFallbackUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-text-secondary hover:text-primary transition-colors"
+                    className="block w-fit py-1.5 text-xs text-text-secondary hover:text-primary transition-colors"
                   >
                     Online version
                   </a>

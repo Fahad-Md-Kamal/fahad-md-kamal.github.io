@@ -4,11 +4,11 @@ import { createPortal } from 'react-dom'
 import { Button } from '@/components/ui/button'
 
 export const inputClass =
-  'w-full min-w-0 rounded-xl border border-border/60 bg-background/60 px-4 py-3 text-sm font-mono text-text-primary placeholder:text-text-secondary/60 focus:outline-none focus:border-primary/60'
+  'w-full min-w-0 rounded-xl border border-border/60 bg-background/60 px-3.5 py-2.5 sm:px-4 sm:py-3 text-base sm:text-sm font-mono text-text-primary placeholder:text-text-secondary/60 focus:outline-none focus:border-primary/60'
 
 export function FieldLabel({ htmlFor, children }: { htmlFor?: string; children: ReactNode }) {
   return (
-    <label htmlFor={htmlFor} className="text-xs font-mono uppercase tracking-wider text-primary mb-2 block">
+    <label htmlFor={htmlFor} className="text-[11px] sm:text-xs font-mono uppercase tracking-wider text-primary mb-1.5 sm:mb-2 block">
       {children}
     </label>
   )
@@ -33,8 +33,8 @@ export function Segmented<T extends string>({ label, value, options, onChange, s
           role="radio"
           aria-checked={value === option.id}
           onClick={() => onChange(option.id)}
-          className={`rounded-xl border font-mono transition-colors ${
-            size === 'sm' ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm'
+          className={`rounded-xl border font-mono transition-colors max-sm:min-h-9 ${
+            size === 'sm' ? 'px-2.5 py-1 text-[11px] sm:px-3 sm:py-1.5 sm:text-xs' : 'px-3 py-1.5 text-[13px] sm:px-4 sm:py-2 sm:text-sm'
           } ${
             value === option.id
               ? 'border-primary bg-primary/15 text-primary'
@@ -75,7 +75,7 @@ export function ResultBox({ label, value }: { label: string; value: string }) {
       </div>
       <output
         aria-live="polite"
-        className="block rounded-xl border border-border/60 bg-background/60 px-4 py-3 text-sm font-mono text-text-primary break-all select-all"
+        className="block rounded-xl border border-border/60 bg-background/60 px-3 py-2.5 sm:px-4 sm:py-3 text-[13px] sm:text-sm font-mono text-text-primary break-all select-all"
       >
         {value}
       </output>
@@ -90,7 +90,7 @@ export const NotesContext = createContext<{ target: HTMLElement | null } | null>
 export function Note({ title, children }: { title: string; children: ReactNode }) {
   const notes = useContext(NotesContext)
   const content = (
-    <div className="rounded-xl border border-border/60 bg-background/40 p-4 text-sm text-text-secondary leading-relaxed">
+    <div className="rounded-xl border border-border/60 bg-background/40 p-3.5 sm:p-4 text-[13px] sm:text-sm text-text-secondary leading-relaxed">
       <div className="font-display font-semibold text-text-primary mb-2">{title}</div>
       <div>{children}</div>
     </div>
@@ -102,7 +102,7 @@ export function Note({ title, children }: { title: string; children: ReactNode }
 
 export function ErrorText({ children }: { children: ReactNode }) {
   return (
-    <p className="text-sm text-red-400" role="alert">
+    <p className="text-[13px] sm:text-sm text-red-400" role="alert">
       {children}
     </p>
   )

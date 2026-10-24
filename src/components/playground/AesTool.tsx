@@ -43,7 +43,7 @@ export default function AesTool() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <Segmented
         label="Mode"
         value={mode}

@@ -109,6 +109,7 @@ export default {
   		animation: {
   			'fade-in': 'fadeIn 0.6s ease-in-out',
   			'slide-up': 'slideUp 0.6s ease-out',
+  			'sheet-up': 'sheetUp 0.28s cubic-bezier(0.32, 0.72, 0, 1)',
   			'bounce-gentle': 'bounceGentle 2s infinite',
   			'float-slow': 'floatSlow 9s ease-in-out infinite',
   			'float-slower': 'floatSlow 13s ease-in-out infinite'
@@ -130,6 +131,14 @@ export default {
   				'100%': {
   					transform: 'translateY(0)',
   					opacity: '1'
+  				}
+  			},
+  			sheetUp: {
+  				'0%': {
+  					transform: 'translateY(100%)'
+  				},
+  				'100%': {
+  					transform: 'translateY(0)'
   				}
   			},
   			bounceGentle: {

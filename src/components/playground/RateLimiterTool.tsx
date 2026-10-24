@@ -134,11 +134,11 @@ export default function RateLimiterTool() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <FieldLabel>Algorithm</FieldLabel>
         <Segmented label="Rate limiting algorithm" value={algorithm} options={ALGORITHMS} onChange={setAlgorithm} />
-        <p className="mt-3 text-sm text-text-secondary leading-relaxed">{EXPLAIN[algorithm]}</p>
+        <p className="mt-3 text-[13px] sm:text-sm text-text-secondary leading-relaxed">{EXPLAIN[algorithm]}</p>
       </div>
 
       <div className="grid sm:grid-cols-3 gap-4">
@@ -181,7 +181,7 @@ export default function RateLimiterTool() {
         <p className="mt-2 text-xs font-mono text-text-secondary">
           Last {VISIBLE_SECONDS} seconds · {usage}
         </p>
-        <p className="mt-1 text-sm font-mono text-text-primary">
+        <p className="mt-1 text-[13px] sm:text-sm font-mono text-text-primary">
           <span className="text-green-400">{totalsRef.current.allowed} allowed</span> ·{' '}
           <span className="text-red-400">{totalsRef.current.blocked} blocked</span>
         </p>

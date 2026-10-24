@@ -69,7 +69,7 @@ export default function EncodeTool() {
   }, [mode, direction, input])
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div className="flex flex-wrap gap-4 items-center justify-between">
         <Segmented label="Format" value={mode} options={MODES} onChange={setMode} />
         <Segmented
@@ -94,7 +94,7 @@ export default function EncodeTool() {
         />
       </div>
 
-      {result.error && <p className="text-sm text-red-400" role="alert">{result.error}</p>}
+      {result.error && <p className="text-[13px] sm:text-sm text-red-400" role="alert">{result.error}</p>}
       {result.output && (
         <>
           <ResultBox label="Output" value={result.output} />

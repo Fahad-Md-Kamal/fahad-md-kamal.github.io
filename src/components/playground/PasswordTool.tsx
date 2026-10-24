@@ -86,7 +86,7 @@ export default function PasswordTool() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <FieldLabel htmlFor="password-length">Length: {length}</FieldLabel>
         <input
@@ -104,12 +104,12 @@ export default function PasswordTool() {
         <FieldLabel>Characters</FieldLabel>
         <div className="flex flex-wrap gap-4">
           {(Object.keys(SETS) as SetKey[]).map(key => (
-            <label key={key} className="flex items-center gap-2 text-sm text-text-secondary cursor-pointer">
+            <label key={key} className="flex items-center gap-2 text-[13px] sm:text-sm text-text-secondary cursor-pointer">
               <input type="checkbox" checked={enabled[key]} onChange={() => toggle(key)} className="accent-[hsl(var(--primary))]" />
               <span className="font-mono">{SET_LABELS[key]}</span>
             </label>
           ))}
-          <label className="flex items-center gap-2 text-sm text-text-secondary cursor-pointer">
+          <label className="flex items-center gap-2 text-[13px] sm:text-sm text-text-secondary cursor-pointer">
             <input
               type="checkbox"
               checked={skipAmbiguous}
@@ -125,7 +125,7 @@ export default function PasswordTool() {
 
       <div className="flex flex-wrap items-center gap-3">
         <Button type="button" onClick={regenerate}>Generate another</Button>
-        <p className="text-sm font-mono text-text-secondary">
+        <p className="text-[13px] sm:text-sm font-mono text-text-secondary">
           ~{bits} bits of entropy · <span className={strength.color}>{strength.label}</span>
         </p>
       </div>

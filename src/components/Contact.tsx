@@ -109,9 +109,9 @@ export default function Contact({ profile }: ContactProps) {
             </p>
           </Reveal>
 
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Methods */}
-            <Reveal className="space-y-8">
+            <Reveal className="space-y-8 min-w-0">
               <Card>
                 <CardContent className="p-4 flex items-center gap-4">
                   <div className="w-14 h-14 rounded-full overflow-hidden border border-border/60 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center flex-shrink-0">
@@ -156,13 +156,13 @@ export default function Contact({ profile }: ContactProps) {
                           <div className="w-10 h-10 bg-surface border border-border/60 rounded-xl flex items-center justify-center text-primary group-hover:text-primary/80 flex-shrink-0">
                             <method.Icon className="w-5 h-5" />
                           </div>
-                          <div className="flex-1">
+                          <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
                               <h3 className="font-semibold text-text-primary">
                                 {method.label}
                               </h3>
                             </div>
-                            <DecodeText text={method.value} className="text-sm text-text-secondary mb-2 block" />
+                            <DecodeText text={method.value} className="text-sm text-text-secondary mb-2 block break-all" />
                             <p className="text-xs text-text-secondary">
                               {method.description}
                             </p>
@@ -199,7 +199,7 @@ export default function Contact({ profile }: ContactProps) {
             </Reveal>
 
             {/* Contact Form */}
-            <Reveal delay={120} as={Card as any}>
+            <Reveal delay={120} as={Card as any} className="min-w-0">
               <CardHeader className="pb-4">
                 <div className="text-xs font-mono uppercase tracking-wider text-primary flex items-center gap-2">
                   <DecodeText text="Send a Message" />
@@ -208,7 +208,7 @@ export default function Contact({ profile }: ContactProps) {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name" className="text-sm font-mono text-text-secondary">
                         Name *

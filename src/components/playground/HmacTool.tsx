@@ -64,7 +64,7 @@ export default function HmacTool() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <FieldLabel>Algorithm</FieldLabel>
         <Segmented
@@ -133,7 +133,7 @@ export default function HmacTool() {
           <p className="mt-2 text-xs font-mono text-text-secondary">Generate the HMAC first, then it is compared with this signature.</p>
         )}
         {verdict !== null && (
-          <p className={`mt-2 text-sm font-mono ${verdict ? 'text-green-400' : 'text-red-400'}`} role="status">
+          <p className={`mt-2 text-[13px] sm:text-sm font-mono ${verdict ? 'text-green-400' : 'text-red-400'}`} role="status">
             {verdict
               ? '✓ Valid: this key and message produce that signature.'
               : '✗ Not valid: the key, message or algorithm differs, or the signature was altered.'}

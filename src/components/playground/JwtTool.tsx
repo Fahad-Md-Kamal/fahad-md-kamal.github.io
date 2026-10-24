@@ -89,7 +89,7 @@ export default function JwtTool() {
   const alg = decoded ? String(decoded.header.alg ?? '') : ''
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <div className="flex items-center justify-between mb-2">
           <label htmlFor="jwt-input" className="text-xs font-mono uppercase tracking-wider text-primary">
@@ -112,12 +112,12 @@ export default function JwtTool() {
         />
       </div>
 
-      {result?.error && <p className="text-sm text-red-400" role="alert">{result.error}</p>}
+      {result?.error && <p className="text-[13px] sm:text-sm text-red-400" role="alert">{result.error}</p>}
 
       {decoded && (
-        <div className="space-y-5">
+        <div className="space-y-4 sm:space-y-5">
           {alg.toLowerCase() === 'none' && (
-            <p className="text-sm text-red-400" role="alert">
+            <p className="text-[13px] sm:text-sm text-red-400" role="alert">
               This token uses alg &quot;none&quot;, which means it has no signature. A server must never accept it.
             </p>
           )}
@@ -127,7 +127,7 @@ export default function JwtTool() {
           {timeClaims.length > 0 && (
             <div>
               <div className="text-xs font-mono uppercase tracking-wider text-primary mb-2">Time claims</div>
-              <ul className="space-y-1 text-sm text-text-secondary font-mono">
+              <ul className="space-y-1 text-[13px] sm:text-sm text-text-secondary font-mono">
                 {timeClaims.map(c => (
                   <li key={c.claim}>
                     <span className="text-text-primary">{c.claim}</span>: {c.text}

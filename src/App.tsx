@@ -61,7 +61,7 @@ function App() {
   }, [profile])
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-[calc(4rem+env(safe-area-inset-bottom))] md:pb-0">
       <AmbientBackground />
       <Header profile={profile} hasCertifications={hasCertifications} hasTestimonials={hasTestimonials} />
       

@@ -89,7 +89,7 @@ export default function BcryptTool() {
   const maxMs = Math.max(1, ...runs.map(r => r.ms))
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <FieldLabel htmlFor="bcrypt-password">Password</FieldLabel>
         <div className="flex gap-2">
@@ -142,7 +142,7 @@ export default function BcryptTool() {
           <div className="text-xs font-mono uppercase tracking-wider text-primary mb-2">Time taken</div>
           <ul className="space-y-1.5">
             {runs.map((run, i) => (
-              <li key={`${run.cost}-${i}`} className="flex items-center gap-3 text-sm font-mono">
+              <li key={`${run.cost}-${i}`} className="flex items-center gap-3 text-[13px] sm:text-sm font-mono">
                 <span className="w-14 text-text-secondary">cost {run.cost}</span>
                 <span className="flex-1 h-2 rounded-full bg-white/[0.06] overflow-hidden">
                   <span
@@ -177,7 +177,7 @@ export default function BcryptTool() {
           <Button type="button" variant="outline" onClick={verify} disabled={busy}>Check</Button>
         </div>
         {verifyResult !== null && (
-          <p className={`mt-2 text-sm font-mono ${verifyResult ? 'text-green-400' : 'text-red-400'}`} role="status">
+          <p className={`mt-2 text-[13px] sm:text-sm font-mono ${verifyResult ? 'text-green-400' : 'text-red-400'}`} role="status">
             {verifyResult ? '✓ The password matches this hash.' : '✗ The password does not match this hash.'}
           </p>
         )}

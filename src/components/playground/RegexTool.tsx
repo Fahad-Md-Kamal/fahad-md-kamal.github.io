@@ -49,7 +49,7 @@ export default function RegexTool() {
     setFlags(current => (current.includes(id) ? current.filter(f => f !== id) : [...current, id]))
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <FieldLabel htmlFor="regex-pattern">Pattern</FieldLabel>
         <div className="flex gap-2 items-center">
@@ -73,7 +73,7 @@ export default function RegexTool() {
               title={flag.title}
               aria-pressed={flags.includes(flag.id)}
               onClick={() => toggleFlag(flag.id)}
-              className={`rounded-lg border px-3 py-1 text-xs font-mono transition-colors ${
+              className={`rounded-lg border px-3 py-1 max-sm:min-w-11 max-sm:min-h-9 text-xs font-mono transition-colors ${
                 flags.includes(flag.id)
                   ? 'border-primary bg-primary/15 text-primary'
                   : 'border-border/60 text-text-secondary hover:border-primary/40'
@@ -105,7 +105,7 @@ export default function RegexTool() {
             <div className="text-xs font-mono uppercase tracking-wider text-primary mb-2">
               {result.matches.length} {result.matches.length === 1 ? 'match' : 'matches'}
             </div>
-            <div className="rounded-xl border border-border/60 bg-background/60 px-4 py-3 text-sm font-mono text-text-secondary whitespace-pre-wrap break-all">
+            <div className="rounded-xl border border-border/60 bg-background/60 px-4 py-3 text-[13px] sm:text-sm font-mono text-text-secondary whitespace-pre-wrap break-all">
               {result.segments.map((seg, i) =>
                 seg.hit ? (
                   <mark key={i} className="rounded bg-primary/30 text-text-primary px-0.5">{seg.text}</mark>
@@ -122,7 +122,7 @@ export default function RegexTool() {
           </div>
 
           {result.matches.length > 0 && (
-            <ol className="space-y-2 text-sm font-mono">
+            <ol className="space-y-2 text-[13px] sm:text-sm font-mono">
               {result.matches.slice(0, 20).map((m, i) => (
                 <li key={`${m.index}-${i}`} className="rounded-xl border border-border/60 bg-background/40 px-4 py-2">
                   <div className="text-text-primary break-all">

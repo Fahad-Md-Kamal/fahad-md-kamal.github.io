@@ -98,7 +98,7 @@ export default function HashRingTool() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div className="grid md:grid-cols-2 gap-6 items-start">
         <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="w-full max-w-sm mx-auto" role="img" aria-label="Hash ring with servers and keys">
           <circle cx={CENTER} cy={CENTER} r={RADIUS} fill="none" stroke="currentColor" className="text-border" strokeWidth="2" />
@@ -125,7 +125,7 @@ export default function HashRingTool() {
                   onClick={() => removeNode(n)}
                   disabled={nodes.length === 1}
                   title={nodes.length === 1 ? 'Keep at least one server' : `Remove ${n}`}
-                  className="inline-flex items-center gap-2 rounded-xl border border-border/60 px-3 py-1.5 text-xs font-mono text-text-primary hover:border-red-400/60 disabled:opacity-60"
+                  className="inline-flex items-center gap-2 rounded-xl border border-border/60 px-3 py-1.5 max-sm:min-h-9 text-xs font-mono text-text-primary hover:border-red-400/60 disabled:opacity-60"
                 >
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background: colorOf(n) }} />
                   {n} <span aria-hidden="true">×</span>
@@ -149,7 +149,7 @@ export default function HashRingTool() {
             />
           </div>
 
-          <ul className="space-y-1.5 text-sm font-mono">
+          <ul className="space-y-1.5 text-[13px] sm:text-sm font-mono">
             {counts.map(c => (
               <li key={c.node} className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: colorOf(c.node) }} />
@@ -165,7 +165,7 @@ export default function HashRingTool() {
       </div>
 
       {change && (
-        <div className="rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-sm" aria-live="polite">
+        <div className="rounded-xl border border-primary/30 bg-primary/10 px-4 py-3 text-[13px] sm:text-sm" aria-live="polite">
           <div className="text-text-primary font-medium mb-1">{change.description}</div>
           <div className="font-mono text-text-secondary">
             Consistent hashing moved <span className="text-green-400">{change.consistentMoved}</span> of {KEY_COUNT} keys.

@@ -59,7 +59,7 @@ export default function ChecksumTool() {
   const match = hash && normalizedExpected ? hash === normalizedExpected : null
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
         <FieldLabel>Algorithm</FieldLabel>
         <Segmented
@@ -78,7 +78,7 @@ export default function ChecksumTool() {
           dragging ? 'border-primary bg-primary/10' : 'border-border/60 bg-background/40'
         }`}
       >
-        <p className="text-sm text-text-secondary mb-3">Drop a file here, or choose one. It is read locally and never uploaded.</p>
+        <p className="text-[13px] sm:text-sm text-text-secondary mb-3">Drop a file here, or choose one. It is read locally and never uploaded.</p>
         <input ref={inputRef} type="file" className="hidden" onChange={e => choose(e.target.files?.[0])} />
         <Button type="button" variant="outline" onClick={() => inputRef.current?.click()}>Choose file</Button>
         {file && (
@@ -88,7 +88,7 @@ export default function ChecksumTool() {
         )}
       </div>
 
-      {busy && <p className="text-sm text-text-secondary font-mono" aria-live="polite">Hashing…</p>}
+      {busy && <p className="text-[13px] sm:text-sm text-text-secondary font-mono" aria-live="polite">Hashing…</p>}
       {error && <ErrorText>{error}</ErrorText>}
       {hash && <ResultBox label={`${algorithm} checksum`} value={hash} />}
 
@@ -105,7 +105,7 @@ export default function ChecksumTool() {
           className={inputClass}
         />
         {match !== null && (
-          <p className={`mt-2 text-sm font-mono ${match ? 'text-green-400' : 'text-red-400'}`} role="status">
+          <p className={`mt-2 text-[13px] sm:text-sm font-mono ${match ? 'text-green-400' : 'text-red-400'}`} role="status">
             {match ? '✓ Match: the file is identical.' : '✗ No match: the file differs from the expected hash.'}
           </p>
         )}
