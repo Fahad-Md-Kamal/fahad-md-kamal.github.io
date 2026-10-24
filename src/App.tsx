@@ -11,10 +11,11 @@ import Certifications from './components/Certifications'
 import GithubActivity from './components/GithubActivity'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import ScrollToTop from './components/ScrollToTop'
 import { SideDock } from './components/SideDock'
 import { ThemeButtons } from './components/ThemeToggle'
 import { ContactButtons } from './components/ContactDock'
+import { EffectsButtons } from './components/EffectsToggle'
+import BackgroundEffects from './components/BackgroundEffects'
 import Blogs from './components/Blogs'
 import Services from './components/Services'
 import Testimonials from './components/Testimonials'
@@ -87,10 +88,12 @@ function App() {
       </main>
       
       <Footer profile={profile} />
-      <ScrollToTop />
+      {/* After the sections, so it paints above their backgrounds but below their (lifted) content */}
+      <BackgroundEffects />
       <SideDock>
         <ContactButtons profile={profile} />
         <ThemeButtons />
+        <EffectsButtons />
       </SideDock>
     </div>
   )

@@ -2,7 +2,7 @@ import type { Profile, ServicesData } from '../types'
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import DecodeText from './DecodeText'
+import RevealText from './RevealText'
 import Reveal from './Reveal'
 
 interface ServicesProps {
@@ -21,9 +21,9 @@ export default function Services({ services, profile }: ServicesProps) {
         <div className="max-w-6xl mx-auto">
           <Reveal className="mb-16">
             <div className="section-eyebrow">
-              <DecodeText text="Work With Me" />
+              <RevealText text="Work With Me" />
             </div>
-            <DecodeText as="h2" text={services.headline} className="section-title mb-4" />
+            <RevealText as="h2" text={services.headline} className="section-title mb-4" />
             <p className="text-lg text-text-secondary max-w-3xl leading-relaxed">{services.intro}</p>
           </Reveal>
 
@@ -65,7 +65,7 @@ export default function Services({ services, profile }: ServicesProps) {
 
           <Reveal className="mb-16">
             <div className="text-xs font-mono uppercase tracking-wider text-primary mb-6 flex items-center gap-2">
-              <DecodeText text="How I Work" />
+              <RevealText text="How I Work" />
               <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -80,7 +80,7 @@ export default function Services({ services, profile }: ServicesProps) {
           </Reveal>
 
           <Reveal className="p-8 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-surface to-secondary/10 text-center">
-            <DecodeText as="h3" text="Have something in mind?" className="text-2xl font-display font-semibold text-text-primary mb-2" />
+            <RevealText as="h3" text="Have something in mind?" className="text-2xl font-display font-semibold text-text-primary mb-2" />
             <p className="text-text-secondary mb-2">
               Tell me what you're building and what's blocking you. I'll reply with an honest view of how I'd approach it.
             </p>

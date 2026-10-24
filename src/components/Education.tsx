@@ -3,7 +3,7 @@ import type { EducationData, Education } from '../types'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import DecodeText from './DecodeText'
+import RevealText from './RevealText'
 import Reveal from './Reveal'
 
 interface EducationProps {
@@ -62,7 +62,7 @@ function EducationCard({ education, index }: EducationCardProps) {
             <div className="flex-1">
               <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
                 <div className="flex-1">
-                  <DecodeText as="h3" text={education.degree} className="text-xl font-semibold text-foreground mb-2" />
+                  <RevealText as="h3" text={education.degree} className="text-xl font-semibold text-foreground mb-2" />
                   <div className="flex items-center gap-3 mb-3">
                     {education.website ? (
                       <Button
@@ -86,7 +86,7 @@ function EducationCard({ education, index }: EducationCardProps) {
 
                 <div className="text-right">
                   <Badge variant="secondary" className="flex items-center gap-2">
-                    <DecodeText text={`${formatDate(education.startDate)} - ${formatDate(education.endDate)}`} />
+                    <RevealText text={`${formatDate(education.startDate)} - ${formatDate(education.endDate)}`} />
                   </Badge>
                 </div>
               </div>
@@ -125,9 +125,9 @@ export default function Education({ education }: EducationProps) {
         <div className="max-w-4xl mx-auto">
           <Reveal className="mb-16">
             <div className="section-eyebrow">
-              <DecodeText text="Background" />
+              <RevealText text="Background" />
             </div>
-            <DecodeText as="h2" text="Education" className="section-title mb-4" />
+            <RevealText as="h2" text="Education" className="section-title mb-4" />
             <p className="text-xl text-muted-foreground max-w-2xl">
               Academic background behind the engineering work.
             </p>

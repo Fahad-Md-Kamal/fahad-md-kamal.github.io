@@ -10,7 +10,7 @@ import {
   IconX,
 } from '@/components/icons'
 import { whatsappGreeting, whatsappLink } from '@/lib/whatsapp'
-import DecodeText from './DecodeText'
+import RevealText from './RevealText'
 import Reveal from './Reveal'
 
 interface FooterProps {
@@ -91,7 +91,7 @@ export default function Footer({ profile }: FooterProps) {
             {/* Explore */}
             <nav aria-label="Footer">
               <h3 className="section-eyebrow">
-                <DecodeText text="Explore" />
+                <RevealText text="Explore" />
               </h3>
               <ul className="grid grid-cols-2 gap-x-6 gap-y-0.5">
                 {EXPLORE_LINKS.map(link => (
@@ -115,7 +115,7 @@ export default function Footer({ profile }: FooterProps) {
             {/* Connect */}
             <div>
               <h3 className="section-eyebrow">
-                <DecodeText text="Connect" />
+                <RevealText text="Connect" />
               </h3>
               <ul className="grid grid-cols-4 gap-2.5 sm:flex sm:flex-wrap">
                 {connect.map(({ label, href, Icon, short }) => (

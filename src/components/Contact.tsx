@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { IconMail, IconGithub, IconLinkedin, IconTelegram, IconWhatsapp, IconExternalLink, IconCheckCircle, IconAlertCircle } from '@/components/icons'
 import { whatsappLink, whatsappGreeting } from '@/lib/whatsapp'
-import DecodeText from './DecodeText'
+import RevealText from './RevealText'
 import Reveal from './Reveal'
 
 interface ContactProps {
@@ -110,9 +110,9 @@ export default function Contact({ profile }: ContactProps) {
           {/* Section Header */}
           <Reveal className="mb-16">
             <div className="section-eyebrow">
-              <DecodeText text="Get in Touch" />
+              <RevealText text="Get in Touch" />
             </div>
-            <DecodeText as="h2" text="Contact" className="section-title mb-4" />
+            <RevealText as="h2" text="Contact" className="section-title mb-4" />
             <p className="text-lg text-text-secondary max-w-3xl leading-relaxed">
               Open to full-stack engineering roles, contract work, and technical conversations.
             </p>
@@ -148,7 +148,7 @@ export default function Contact({ profile }: ContactProps) {
               <Card>
                 <CardHeader className="pb-4">
                   <div className="text-xs font-mono uppercase tracking-wider text-primary flex items-center gap-2">
-                    <DecodeText text="Communication Channels" />
+                    <RevealText text="Communication Channels" />
                     <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
                   </div>
                 </CardHeader>
@@ -183,14 +183,14 @@ export default function Contact({ profile }: ContactProps) {
               <Card>
                 <CardHeader className="pb-4">
                   <div className="text-xs font-mono uppercase tracking-wider text-primary flex items-center gap-2">
-                    <DecodeText text="Response Metrics" />
+                    <RevealText text="Response Metrics" />
                     <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 gap-4 text-center">
                     <div className="rounded-xl border border-border/60 bg-background/40 p-3">
-                      <DecodeText text="24h" className="text-lg font-display font-bold text-primary block" />
+                      <RevealText text="24h" className="text-lg font-display font-bold text-primary block" />
                       <div className="text-xs text-text-secondary">Email Response</div>
                     </div>
                     <div className="rounded-xl border border-border/60 bg-background/40 p-3">
@@ -206,7 +206,7 @@ export default function Contact({ profile }: ContactProps) {
             <Reveal delay={120} as={Card as any} className="min-w-0">
               <CardHeader className="pb-4">
                 <div className="text-xs font-mono uppercase tracking-wider text-primary flex items-center gap-2">
-                  <DecodeText text="Send a Message" />
+                  <RevealText text="Send a Message" />
                   <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
                 </div>
               </CardHeader>

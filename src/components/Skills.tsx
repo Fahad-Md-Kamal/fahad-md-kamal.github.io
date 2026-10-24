@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '@/components/ui/card'
 import type { SkillsData, SkillCategory } from '../types'
-import DecodeText from './DecodeText'
+import RevealText from './RevealText'
 import Reveal from './Reveal'
 
 interface SkillsProps {
@@ -19,7 +19,7 @@ function SkillItem({ skill, index }: SkillItemProps) {
       className="flex items-center justify-between p-3 rounded-xl border border-border/60 bg-background/30 hover:border-primary/40 hover:bg-background/50 transition-all duration-300"
       style={{ transitionDelay: `${index * 40}ms` }}
     >
-      <DecodeText text={skill.name} delay={index * 40} className="text-text-primary text-sm font-medium" />
+      <RevealText text={skill.name} delay={index * 40} className="text-text-primary text-sm font-medium" />
       <span className="text-xs font-mono text-primary whitespace-nowrap ml-3">
         {skill.years}+ {skill.years > 1 ? 'yrs' : 'yr'}
       </span>
@@ -41,7 +41,7 @@ function CategorySection({ category, index }: CategorySectionProps) {
             <span className="text-2xl">{category.icon}</span>
           </div>
           <div>
-            <DecodeText as={CardTitle as any} text={category.name} className="text-lg font-display font-semibold text-text-primary" />
+            <RevealText as={CardTitle as any} text={category.name} className="text-lg font-display font-semibold text-text-primary" />
             <CardDescription className="text-sm text-text-secondary">
               {category.skills.length} technologies
             </CardDescription>
@@ -86,9 +86,9 @@ export default function Skills({ skills }: SkillsProps) {
           {/* Section Header */}
           <Reveal className="mb-16">
             <div className="section-eyebrow">
-              <DecodeText text="Technology Stack" />
+              <RevealText text="Technology Stack" />
             </div>
-            <DecodeText as="h2" text="Tools I reach for" className="section-title mb-4" />
+            <RevealText as="h2" text="Tools I reach for" className="section-title mb-4" />
             <p className="text-lg text-text-secondary max-w-3xl leading-relaxed">
               Technologies I've used in production systems and AI-focused projects, with years of hands-on use.
             </p>
@@ -182,11 +182,11 @@ export default function Skills({ skills }: SkillsProps) {
 
           {/* Technical Notes */}
           <Reveal className="mt-20 p-8 bg-gradient-to-br from-surface to-surface/60 rounded-2xl border border-border/60 shadow-soft">
-            <DecodeText as="h3" text="Technical Philosophy" className="text-lg font-display font-semibold text-text-primary mb-4" />
+            <RevealText as="h3" text="Technical Philosophy" className="text-lg font-display font-semibold text-text-primary mb-4" />
             <div className="grid md:grid-cols-2 gap-6 text-sm">
               <div>
                 <div className="font-mono text-xs uppercase tracking-wider text-secondary mb-2">
-                  <DecodeText text="Architecture Principles" />
+                  <RevealText text="Architecture Principles" />
                 </div>
                 <p className="text-text-secondary leading-relaxed">
                   Prefer simple, maintainable backend designs first, then introduce asynchronous processing,
@@ -195,7 +195,7 @@ export default function Skills({ skills }: SkillsProps) {
               </div>
               <div>
                 <div className="font-mono text-xs uppercase tracking-wider text-secondary mb-2">
-                  <DecodeText text="Performance Focus" />
+                  <RevealText text="Performance Focus" />
                 </div>
                 <p className="text-text-secondary leading-relaxed">
                   Focus on query optimization, background jobs, cache-aware design,

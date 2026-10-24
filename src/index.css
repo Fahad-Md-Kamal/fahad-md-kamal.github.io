@@ -232,3 +232,11 @@
 .light .bg-green-500\/10,
 .light .bg-green-500\/15 { background-color: rgb(22 163 74 / 0.12); }
 .light ::selection { background-color: hsl(var(--primary) / 0.25); }
+
+/* Background effects: the canvas (see BackgroundEffects) sits above the sections' own backgrounds,
+   so each section's content is lifted one layer above it. :where() keeps this at zero specificity,
+   leaving absolutely positioned decoration and any explicit z-index untouched. */
+:where(main > section > :not(.absolute):not(.fixed), footer > :not(.absolute):not(.fixed)) {
+  position: relative;
+  z-index: 1;
+}

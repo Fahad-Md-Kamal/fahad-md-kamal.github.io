@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { Profile } from '../types'
 import { Button } from '@/components/ui/button'
 import { createPortal } from 'react-dom'
+import { useActiveSection } from '@/hooks/useActiveSection'
 import { IconMenu, IconClose, IconChevronDown, IconHome, IconFolder, IconBriefcase, IconTerminal, IconGrid } from './icons'
 
 interface HeaderProps {
@@ -14,7 +15,7 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isMoreOpen, setIsMoreOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('hero')
+  const activeSection = useActiveSection()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -22,34 +23,6 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // Highlight the bottom-bar tab for the section crossing the upper-middle of the screen.
-  // Looked up on every scroll because lazy sections replace their placeholder element.
-  useEffect(() => {
-    const ids = ['hero', 'about', 'skills', 'projects', 'services', 'testimonials', 'experience', 'education', 'certifications', 'github', 'blogs', 'playground', 'contact']
-    let frame = 0
-    const update = () => {
-      frame = 0
-      const line = window.innerHeight * 0.4
-      let current = 'hero'
-      for (const id of ids) {
-        const el = document.getElementById(id)
-        if (el && el.getBoundingClientRect().top <= line) current = id
-      }
-      setActiveSection(current)
-    }
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update)
-    }
-    update()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-      if (frame) cancelAnimationFrame(frame)
-    }
   }, [])
 
   // "More" sheet: lock page scroll behind it and let Escape close it.

@@ -1,6 +1,6 @@
 import type { TestimonialsData } from '../types'
 import { Card, CardContent } from '@/components/ui/card'
-import DecodeText from './DecodeText'
+import RevealText from './RevealText'
 import Reveal from './Reveal'
 
 interface TestimonialsProps {
@@ -18,9 +18,9 @@ export default function Testimonials({ testimonials }: TestimonialsProps) {
         <div className="max-w-6xl mx-auto">
           <Reveal className="mb-12">
             <div className="section-eyebrow">
-              <DecodeText text="Kind Words" />
+              <RevealText text="Kind Words" />
             </div>
-            <DecodeText as="h2" text="What people I've worked with say" className="section-title" />
+            <RevealText as="h2" text="What people I've worked with say" className="section-title" />
           </Reveal>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

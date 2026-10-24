@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { IconMapPin, IconMail } from '@/components/icons'
-import DecodeText from './DecodeText'
+import RevealText from './RevealText'
 import Reveal from './Reveal'
 
 interface AboutProps {
@@ -48,9 +48,9 @@ export default function About({ profile, projectCount }: AboutProps) {
           {/* Section Header */}
           <Reveal className="mb-16">
             <div className="section-eyebrow">
-              <DecodeText text="About Me" />
+              <RevealText text="About Me" />
             </div>
-            <DecodeText as="h2" text="The engineer behind the systems" className="section-title mb-4" />
+            <RevealText as="h2" text="The engineer behind the systems" className="section-title mb-4" />
             <p className="text-lg text-text-secondary max-w-3xl leading-relaxed">
               Senior backend engineer building multi-tenant SaaS, healthcare, and data platforms in Python and Go, with production AI/LLM integration.
             </p>
@@ -75,7 +75,7 @@ export default function About({ profile, projectCount }: AboutProps) {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <DecodeText as="h3" text={profile.name} className="text-xl font-display font-semibold text-text-primary" />
+                      <RevealText as="h3" text={profile.name} className="text-xl font-display font-semibold text-text-primary" />
                       <p className="text-text-secondary font-mono">{profile.role}</p>
                     </div>
                   </div>
@@ -83,7 +83,7 @@ export default function About({ profile, projectCount }: AboutProps) {
 
                 <CardContent className="space-y-4">
                   <div className="text-xs font-mono uppercase tracking-wider text-primary mb-3 flex items-center gap-2">
-                    <DecodeText text="TECHNICAL SUMMARY" />
+                    <RevealText text="TECHNICAL SUMMARY" />
                     <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
                   </div>
 
@@ -97,14 +97,14 @@ export default function About({ profile, projectCount }: AboutProps) {
 
                   <div className="mt-6 pt-6 border-t border-border/60">
                     <div className="text-xs font-mono uppercase tracking-wider text-primary mb-3">
-                      <DecodeText text="Core Expertise" />
+                      <RevealText text="Core Expertise" />
                     </div>
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       {profile.expertise ? (
                         Object.entries(profile.expertise).map(([key, expertise], i) => (
                           <Reveal key={key} delay={i * 60}>
                             <span className="text-text-secondary">{expertise.label}:</span>
-                            <DecodeText text={expertise.technologies} className="font-mono text-text-primary block" />
+                            <RevealText text={expertise.technologies} className="font-mono text-text-primary block" />
                           </Reveal>
                         ))
                       ) : (
@@ -139,7 +139,7 @@ export default function About({ profile, projectCount }: AboutProps) {
               <Card>
                 <CardHeader className="pb-4">
                   <div className="text-xs font-mono uppercase tracking-wider text-primary flex items-center gap-2">
-                    <DecodeText text="METRICS" />
+                    <RevealText text="METRICS" />
                     <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
                   </div>
                 </CardHeader>
@@ -147,7 +147,7 @@ export default function About({ profile, projectCount }: AboutProps) {
                   <div className="grid grid-cols-2 gap-4">
                     {stats.map((stat, index) => (
                       <Reveal key={index} delay={index * 60} className="text-center p-4 rounded-xl border border-border/60 bg-background/40">
-                        <DecodeText text={stat.value} className="text-2xl font-display font-bold text-primary mb-1 block" />
+                        <RevealText text={stat.value} className="text-2xl font-display font-bold text-primary mb-1 block" />
                         <div className="text-xs text-text-secondary">
                           {stat.label}
                         </div>
@@ -161,7 +161,7 @@ export default function About({ profile, projectCount }: AboutProps) {
               <Card>
                 <CardHeader className="pb-4">
                   <div className="text-xs font-mono uppercase tracking-wider text-primary flex items-center gap-2">
-                    <DecodeText text="CONTACT" />
+                    <RevealText text="CONTACT" />
                     <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
                   </div>
                 </CardHeader>
@@ -172,7 +172,7 @@ export default function About({ profile, projectCount }: AboutProps) {
                     </div>
                     <div>
                       <p className="text-xs text-text-secondary">Location</p>
-                      <DecodeText text={profile.contact?.location || profile.location} className="text-text-primary block" />
+                      <RevealText text={profile.contact?.location || profile.location} className="text-text-primary block" />
                     </div>
                   </div>
 

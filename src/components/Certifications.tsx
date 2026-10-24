@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { CertificationsData, Certification } from '../types'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import DecodeText from './DecodeText'
+import RevealText from './RevealText'
 import Reveal from './Reveal'
 
 interface CertificationsProps {
@@ -46,10 +46,10 @@ function CertificationCard({ certification }: { certification: Certification }) 
                   rel="noopener noreferrer"
                   className="hover:text-primary hover:underline inline-flex items-center gap-1"
                 >
-                  <DecodeText text={certification.name} /> ↗
+                  <RevealText text={certification.name} /> ↗
                 </a>
               ) : (
-                <DecodeText text={certification.name} />
+                <RevealText text={certification.name} />
               )}
             </h3>
             {certification.issuer && (
@@ -58,7 +58,7 @@ function CertificationCard({ certification }: { certification: Certification }) 
           </div>
           {certification.date && (
             <Badge variant="secondary" className="whitespace-nowrap">
-              <DecodeText text={certification.date} />
+              <RevealText text={certification.date} />
             </Badge>
           )}
         </div>
@@ -66,7 +66,7 @@ function CertificationCard({ certification }: { certification: Certification }) 
       {certification.score && (
         <CardContent className="pt-0">
           <Badge variant="outline" className="font-mono text-xs">
-            <DecodeText text={certification.score} />
+            <RevealText text={certification.score} />
           </Badge>
         </CardContent>
       )}
@@ -83,9 +83,9 @@ export default function Certifications({ certifications }: CertificationsProps) 
         <div className="max-w-4xl mx-auto">
           <Reveal className="mb-16">
             <div className="section-eyebrow">
-              <DecodeText text="Credentials" />
+              <RevealText text="Credentials" />
             </div>
-            <DecodeText as="h2" text="Certifications" className="section-title mb-4" />
+            <RevealText as="h2" text="Certifications" className="section-title mb-4" />
             <p className="text-xl text-muted-foreground max-w-2xl">
               Credentials that support the profile above.
             </p>

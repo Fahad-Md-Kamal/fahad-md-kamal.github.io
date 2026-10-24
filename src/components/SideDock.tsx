@@ -26,7 +26,7 @@ export function SideDock({ children }: { children: ReactNode }) {
   return (
     <div
       ref={ref}
-      className={`fixed right-0 top-1/2 z-40 flex -translate-y-1/2 items-stretch transition-transform duration-300 ease-out ${
+      className={`fixed right-0 top-1/2 z-40 flex -translate-y-1/2 items-center gap-1.5 transition-transform duration-300 ease-out ${
         open ? 'translate-x-0' : 'translate-x-[calc(100%-1.75rem)]'
       }`}
     >
@@ -36,13 +36,13 @@ export function SideDock({ children }: { children: ReactNode }) {
         aria-expanded={open}
         aria-controls="side-dock-panel"
         aria-label={open ? 'Hide quick settings' : 'Show quick settings'}
-        className="flex w-7 items-center justify-center rounded-l-xl border border-r-0 border-border/70 bg-card/80 text-text-secondary shadow-soft backdrop-blur transition-colors hover:text-primary"
+        className="flex h-14 w-7 shrink-0 items-center justify-center rounded-l-xl border border-r-0 border-border/70 bg-card/80 text-text-secondary shadow-soft backdrop-blur transition-colors hover:text-primary"
       >
         <IconChevronLeft width={16} height={16} className={`transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
       </button>
       <div
         id="side-dock-panel"
-        className={`flex flex-col gap-3 border-y border-border/70 bg-card/90 p-2.5 shadow-soft backdrop-blur transition-[visibility] duration-300 ${
+        className={`mr-2 flex flex-col gap-3 rounded-2xl border border-border/70 bg-card/95 p-2.5 shadow-soft backdrop-blur transition-[visibility] duration-300 ${
           open ? 'visible' : 'invisible'
         }`}
       >
@@ -54,9 +54,9 @@ export function SideDock({ children }: { children: ReactNode }) {
 
 export function DockGroup({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div role="group" aria-label={label} className="flex flex-col items-center gap-1">
-      <span className="text-[10px] font-mono uppercase tracking-wider text-text-secondary">{label}</span>
-      {children}
+    <div role="group" aria-label={label} className="flex flex-col items-start gap-1 sm:items-center">
+      <span className="px-0.5 text-[10px] font-mono uppercase tracking-wider text-text-secondary">{label}</span>
+      <div className="flex gap-1 sm:flex-col">{children}</div>
     </div>
   )
 }

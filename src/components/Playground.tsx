@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import DecodeText from './DecodeText'
+import RevealText from './RevealText'
 import Reveal from './Reveal'
 import { NotesContext } from './playground/shared'
 import { IconClose } from './icons'
@@ -138,9 +138,9 @@ export default function Playground() {
         <div className="w-full">
           <Reveal className="mb-10">
             <div className="section-eyebrow">
-              <DecodeText text="Playground" />
+              <RevealText text="Playground" />
             </div>
-            <DecodeText as="h2" text="Try it yourself" className="section-title mb-4" />
+            <RevealText as="h2" text="Try it yourself" className="section-title mb-4" />
             <p className="text-lg text-text-secondary max-w-3xl leading-relaxed">
               {ALL_TOOLS.length} tools that run in your browser. Nothing you type ever leaves it.
             </p>

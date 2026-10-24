@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { IconGithub, IconLinkedin, IconX, IconMail, IconWhatsapp, IconMapPin, IconArrowDown } from '@/components/icons'
 import { whatsappLink, whatsappGreeting } from '@/lib/whatsapp'
-import DecodeText from './DecodeText'
+import RevealText from './RevealText'
 import RequestFlow from './RequestFlow'
 interface HeroProps {
   profile: Profile
@@ -116,7 +116,7 @@ export default function Hero({ profile, projectCount }: HeroProps) {
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold mb-4 sm:mb-6 leading-[1.05] tracking-tight text-center">
               <span className="gradient-text">{profile.name}</span>
             </h1>
-            <DecodeText
+            <RevealText
               as="h2"
               text={profile.role}
               className="text-lg sm:text-2xl lg:text-3xl text-text-primary/90 mb-3 sm:mb-4 text-center font-display font-medium block"
@@ -142,25 +142,25 @@ export default function Hero({ profile, projectCount }: HeroProps) {
           <div className="grid grid-cols-2 gap-3 sm:gap-6 mb-8 sm:mb-12 animate-slide-up px-4" style={{ animationDelay: '0.2s' }}>
             <Card className="card-hover">
               <CardContent className="px-3 pb-3 pt-3 sm:px-5 sm:pb-5 sm:pt-5 text-center">
-                <DecodeText text={calculateYearsExperience()} className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
+                <RevealText text={calculateYearsExperience()} className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
                 <div className="text-xs sm:text-sm text-text-secondary">Years Experience</div>
               </CardContent>
             </Card>
             <Card className="card-hover">
               <CardContent className="px-3 pb-3 pt-3 sm:px-5 sm:pb-5 sm:pt-5 text-center">
-                <DecodeText text={calculateSystemsBuilt()} className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
+                <RevealText text={calculateSystemsBuilt()} className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
                 <div className="text-xs sm:text-sm text-text-secondary">Systems Built</div>
               </CardContent>
             </Card>
             <Card className="card-hover">
               <CardContent className="px-3 pb-3 pt-3 sm:px-5 sm:pb-5 sm:pt-5 text-center">
-                <DecodeText text="99.9%" className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
+                <RevealText text="99.9%" className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
                 <div className="text-xs sm:text-sm text-text-secondary">Uptime Achieved</div>
               </CardContent>
             </Card>
             <Card className="card-hover">
               <CardContent className="px-3 pb-3 pt-3 sm:px-5 sm:pb-5 sm:pt-5 text-center">
-                <DecodeText text="5M+" className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
+                <RevealText text="5M+" className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
                 <div className="text-xs sm:text-sm text-text-secondary">Records Processed</div>
               </CardContent>
             </Card>
@@ -218,12 +218,12 @@ export default function Hero({ profile, projectCount }: HeroProps) {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-text-secondary text-xs sm:text-sm">
               <Badge variant="secondary" className="flex items-center gap-2">
                 <IconMapPin className="w-3.5 h-3.5" />
-                <DecodeText text={profile.contact.location} />
+                <RevealText text={profile.contact.location} />
               </Badge>
               {profile.availability.status === 'open' && (
                 <Badge variant="outline" className="flex items-center gap-2 border-green-500/25 text-green-400">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <DecodeText text={profile.availability.message} />
+                  <RevealText text={profile.availability.message} />
                 </Badge>
               )}
             </div>
