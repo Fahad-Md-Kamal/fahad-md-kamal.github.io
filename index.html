@@ -5,6 +5,7 @@
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#0B0F14" />
+    <meta name="color-scheme" content="dark light" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Fahad Md Kamal — Senior Software Engineer building secure, scalable SaaS, healthcare, and AI-integrated backend platforms in Python and Go" />
     <meta name="keywords" content="senior software engineer, python, go, django, fastapi, aws, llm, rag, healthcare, saas" />
@@ -28,8 +29,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="/assets/index-B2EEoR86.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BgJMcmop.css">
+    <script>
+      // Apply the saved (or system) theme before first paint so there is no flash of the wrong one.
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var light = saved === 'light' || (saved !== 'dark' && window.matchMedia('(prefers-color-scheme: light)').matches);
+          if (light) document.documentElement.classList.add('light');
+          document.documentElement.style.colorScheme = light ? 'light' : 'dark';
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', light ? '#f8fafc' : '#0B0F14');
+        } catch (e) {}
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-Cej7iftV.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DY28JN4Z.css">
   </head>
   <body>
     <div id="root"></div>
