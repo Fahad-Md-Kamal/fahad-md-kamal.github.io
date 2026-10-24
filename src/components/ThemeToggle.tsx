@@ -14,7 +14,7 @@ export function ThemeButtons() {
   return (
     <DockGroup label="Theme">
       {OPTIONS.map(({ id, label, Icon }) => (
-        <DockButton key={id} label={label} Icon={Icon} active={preference === id} onClick={() => setTheme(id)} />
+        <DockButton key={id} label={label} Icon={Icon} active={preference === id} onClick={() => setTheme(id)} sound="chime" />
       ))}
     </DockGroup>
   )

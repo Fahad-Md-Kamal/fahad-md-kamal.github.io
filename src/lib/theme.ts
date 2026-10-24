@@ -4,7 +4,7 @@ export type ThemePreference = 'light' | 'dark' | 'system'
 export type ResolvedTheme = 'light' | 'dark'
 
 const STORAGE_KEY = 'theme'
-const THEME_COLORS: Record<ResolvedTheme, string> = { light: '#f8fafc', dark: '#0B0F14' }
+const THEME_COLORS: Record<ResolvedTheme, string> = { light: '#dbe0eb', dark: '#0B0F14' }
 
 const listeners = new Set<() => void>()
 const systemQuery = window.matchMedia('(prefers-color-scheme: light)')

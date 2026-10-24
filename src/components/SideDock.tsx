@@ -66,9 +66,10 @@ interface DockButtonProps {
   Icon: ComponentType<SVGProps<SVGSVGElement>>
   active?: boolean
   onClick: () => void
+  sound?: 'chime' | 'none' // which UI sound a click makes; the default is a soft tick
 }
 
-export function DockButton({ label, Icon, active = false, onClick }: DockButtonProps) {
+export function DockButton({ label, Icon, active = false, onClick, sound }: DockButtonProps) {
   return (
     <button
       type="button"
@@ -76,6 +77,7 @@ export function DockButton({ label, Icon, active = false, onClick }: DockButtonP
       aria-label={label}
       aria-pressed={active}
       title={label}
+      data-sound={sound}
       className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-colors ${
         active
           ? 'border-primary/60 bg-primary/15 text-primary'

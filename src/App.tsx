@@ -16,6 +16,8 @@ import { ThemeButtons } from './components/ThemeToggle'
 import { ContactButtons } from './components/ContactDock'
 import { EffectsButtons } from './components/EffectsToggle'
 import BackgroundEffects from './components/BackgroundEffects'
+import SoundEffects from './components/SoundEffects'
+import SoundControl from './components/SoundControl'
 import Blogs from './components/Blogs'
 import Services from './components/Services'
 import Testimonials from './components/Testimonials'
@@ -90,6 +92,8 @@ function App() {
       <Footer profile={profile} />
       {/* After the sections, so it paints above their backgrounds but below their (lifted) content */}
       <BackgroundEffects />
+      <SoundEffects />
+      <SoundControl />
       <SideDock>
         <ContactButtons profile={profile} />
         <ThemeButtons />

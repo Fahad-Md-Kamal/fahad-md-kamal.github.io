@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useActiveSection } from '@/hooks/useActiveSection'
 import { useEffectsEnabled } from '@/lib/effects'
 import { useTheme } from '@/lib/theme'
+import { FIREWORK_BANG_AT, claimAmbientSlot, hasFireworkSample, playBang, playFirework, playLaunch } from '@/lib/sound'
 
 // A fixed canvas that sits between the sections' backgrounds and their content (see the
 // "background effects" rule in index.css). The scene changes with the section being read:
@@ -178,7 +179,7 @@ function createEngine(canvas: HTMLCanvasElement) {
     if (reduced) drawStatic()
   }
 
-  const burst = (x: number, y: number, power = 1) => {
+  const burst = (x: number, y: number, power = 1, ambient = false, audible = true) => {
     if (particles.filter(p => p.kind === 'spark').length > MAX_SPARKS) return
     const base: (keyof Palette)[] = ['primary', 'secondary', 'gold', 'pink', 'star']
     const main = base[Math.floor(Math.random() * base.length)]
@@ -203,12 +204,13 @@ function createEngine(canvas: HTMLCanvasElement) {
       sparks(Math.round(n * 0.5), 100, 260, false, accent)
     }
     particles.push(make('flash', { x, y, size: 110 * power * reach, life: 0.45, color: main }))
+    if (audible) playBang(power, ambient)
   }
 
-  const launchRocket = () => {
+  const launchRocket = (audible: boolean) => {
     const x = rand(w * 0.12, w * 0.88)
     const ty = rand(h * 0.14, h * 0.5)
-    particles.push(make('rocket', { x, y: h + 8, px: x, py: h + 8, vy: -(h - ty) / 0.95, vx: rand(-14, 14), ty, size: 2, color: 'gold' }))
+    particles.push(make('rocket', { x, y: h + 8, px: x, py: h + 8, vy: -(h - ty) / FIREWORK_BANG_AT, vx: rand(-14, 14), ty, size: 2, color: 'gold', speed: audible ? 1 : 0 }))
   }
 
   const update = (dt: number) => {
@@ -242,7 +244,7 @@ function createEngine(canvas: HTMLCanvasElement) {
           p.x += p.vx * dt
           p.y += p.vy * dt
           if (p.y <= p.ty) {
-            burst(p.x, p.y)
+            burst(p.x, p.y, 1, true, p.speed === 1 && !hasFireworkSample())
             p.life = 0
           }
           break
@@ -280,7 +282,11 @@ function createEngine(canvas: HTMLCanvasElement) {
       rocketTimer -= dt
       if (rocketTimer <= 0) {
         const volley = Math.random() < 0.35 ? 3 : Math.random() < 0.6 ? 2 : 1
-        for (let i = 0; i < volley; i++) launchRocket()
+        // Only one rocket per volley makes sound, and only when the sky has been quiet for a moment.
+        // With the recording, one sound covers the whole launch: whistle on the way up, bang as it opens.
+        const loud = claimAmbientSlot()
+        if (loud && !playFirework()) playLaunch(FIREWORK_BANG_AT)
+        for (let i = 0; i < volley; i++) launchRocket(loud && i === 0)
         rocketTimer = rand(0.8, 1.7)
       }
     }
@@ -522,7 +528,7 @@ function createEngine(canvas: HTMLCanvasElement) {
     },
     setTheme(light: boolean) {
       palette = readPalette(light)
-      intensity = light ? 0.75 : 1
+      intensity = light ? 1.6 : 1 // the faint scenes need a little more strength against the tinted light page
       if (reduced || !enabled) run()
     },
   }
