@@ -17,8 +17,8 @@ const variantClasses: Record<Variant, string> = {
   default:
     "bg-gradient-to-r from-primary to-primary/80 text-white shadow-[0_1px_0_0_rgba(255,255,255,0.15)_inset,0_8px_20px_-8px_hsl(var(--primary)/0.65)] hover:shadow-[0_1px_0_0_rgba(255,255,255,0.15)_inset,0_10px_28px_-6px_hsl(var(--primary)/0.75)] hover:-translate-y-0.5",
   secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:-translate-y-0.5",
-  outline: "border border-border/70 bg-transparent hover:bg-white/[0.04] hover:border-primary/50",
-  ghost: "hover:bg-white/[0.06]",
+  outline: "border border-border/70 bg-transparent hover:bg-text-primary/[0.05] hover:border-primary/50",
+  ghost: "hover:bg-text-primary/[0.07]",
   link: "text-primary underline-offset-4 hover:underline",
   destructive: "bg-destructive text-white hover:bg-destructive/90",
 }

@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
-import { IconGithub, IconLinkedin, IconX, IconMail, IconMapPin, IconArrowDown } from '@/components/icons'
+import { IconGithub, IconLinkedin, IconX, IconMail, IconWhatsapp, IconMapPin, IconArrowDown } from '@/components/icons'
+import { whatsappLink, whatsappGreeting } from '@/lib/whatsapp'
 import DecodeText from './DecodeText'
 import RequestFlow from './RequestFlow'
 interface HeroProps {
@@ -140,25 +141,25 @@ export default function Hero({ profile, projectCount }: HeroProps) {
           {/* Key Metrics - Signal Dense */}
           <div className="grid grid-cols-2 gap-3 sm:gap-6 mb-8 sm:mb-12 animate-slide-up px-4" style={{ animationDelay: '0.2s' }}>
             <Card className="card-hover">
-              <CardContent className="p-3 sm:p-5 text-center">
+              <CardContent className="px-3 pb-3 pt-3 sm:px-5 sm:pb-5 sm:pt-5 text-center">
                 <DecodeText text={calculateYearsExperience()} className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
                 <div className="text-xs sm:text-sm text-text-secondary">Years Experience</div>
               </CardContent>
             </Card>
             <Card className="card-hover">
-              <CardContent className="p-3 sm:p-5 text-center">
+              <CardContent className="px-3 pb-3 pt-3 sm:px-5 sm:pb-5 sm:pt-5 text-center">
                 <DecodeText text={calculateSystemsBuilt()} className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
                 <div className="text-xs sm:text-sm text-text-secondary">Systems Built</div>
               </CardContent>
             </Card>
             <Card className="card-hover">
-              <CardContent className="p-3 sm:p-5 text-center">
+              <CardContent className="px-3 pb-3 pt-3 sm:px-5 sm:pb-5 sm:pt-5 text-center">
                 <DecodeText text="99.9%" className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
                 <div className="text-xs sm:text-sm text-text-secondary">Uptime Achieved</div>
               </CardContent>
             </Card>
             <Card className="card-hover">
-              <CardContent className="p-3 sm:p-5 text-center">
+              <CardContent className="px-3 pb-3 pt-3 sm:px-5 sm:pb-5 sm:pt-5 text-center">
                 <DecodeText text="5M+" className="text-xl sm:text-3xl font-display font-bold text-primary mb-1 block" />
                 <div className="text-xs sm:text-sm text-text-secondary">Records Processed</div>
               </CardContent>
@@ -195,6 +196,7 @@ export default function Hero({ profile, projectCount }: HeroProps) {
               { href: profile.social.github, label: 'GitHub', Icon: IconGithub },
               { href: profile.social.linkedin, label: 'LinkedIn', Icon: IconLinkedin },
               { href: profile.social.twitter, label: 'X (Twitter)', Icon: IconX },
+              { href: whatsappLink(profile.contact.phone, whatsappGreeting(profile.name)), label: 'WhatsApp', Icon: IconWhatsapp },
               { href: `mailto:${profile.contact.email}`, label: 'Email', Icon: IconMail },
             ].map(({ href, label, Icon }) => (
               <a

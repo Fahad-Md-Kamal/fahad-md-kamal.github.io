@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { Profile } from '../types'
 import { Button } from '@/components/ui/button'
 import { createPortal } from 'react-dom'
-import { IconMenu, IconClose, IconHome, IconFolder, IconBriefcase, IconTerminal, IconGrid } from './icons'
+import { IconMenu, IconClose, IconChevronDown, IconHome, IconFolder, IconBriefcase, IconTerminal, IconGrid } from './icons'
 
 interface HeaderProps {
   profile: Profile
@@ -15,6 +15,8 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isMoreOpen, setIsMoreOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -63,6 +65,21 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
     }
   }, [isMoreOpen])
 
+  // Desktop "More" dropdown: closes on an outside click or Escape.
+  useEffect(() => {
+    if (!isDropdownOpen) return
+    const onPointerDown = (e: PointerEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) setIsDropdownOpen(false)
+    }
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setIsDropdownOpen(false)
+    document.addEventListener('pointerdown', onPointerDown)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [isDropdownOpen])
+
   const navLinks = [
     { label: 'About', href: '#about' },
     { label: 'Skills', href: '#skills' },
@@ -76,6 +93,12 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
     { label: 'Playground', href: '#playground' },
   ]
 
+  // The desktop bar shows only the main sections; the rest live under "More".
+  const topIds = ['about', 'projects', 'experience', 'blogs', 'playground']
+  const topLinks = navLinks.filter(l => topIds.includes(l.href.slice(1)))
+  const moreLinks = navLinks.filter(l => !topIds.includes(l.href.slice(1)))
+  const moreActive = moreLinks.some(l => l.href.slice(1) === activeSection)
+
   const resumeLink = profile.resumeUrl || profile.resumeFallbackUrl || '#'
 
   const scrollToSection = (id: string) => {
@@ -84,6 +107,7 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
       el.scrollIntoView({ behavior: 'smooth' })
       setIsMobileOpen(false)
       setIsMoreOpen(false)
+      setIsDropdownOpen(false)
     }
   }
 
@@ -113,41 +137,99 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
             <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-secondary text-background font-display font-bold text-sm shadow-glow transition-transform duration-200 group-hover:scale-105">
               {profile.name.split(' ').map(word => word[0]).join('')}
             </span>
-            <span className="hidden sm:inline font-display font-semibold text-text-primary group-hover:text-primary transition-colors">
+            <span className="hidden sm:inline whitespace-nowrap font-display font-semibold text-text-primary group-hover:text-primary transition-colors">
               {profile.name}
             </span>
           </button>
 
+          <div className="flex items-center gap-2">
           {/* Desktop */}
-          <div className="hidden xl:flex items-center gap-1">
-            {navLinks.map(link => (
+          <div className="hidden lg:flex items-center gap-1">
+            {topLinks.map(link => {
+              const active = activeSection === link.href.slice(1)
+              return (
+                <button
+                  key={link.label}
+                  onClick={() => scrollToSection(link.href.slice(1))}
+                  aria-current={active ? 'true' : undefined}
+                  className={`group relative px-3 py-2 text-sm font-medium transition-colors ${
+                    active ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
+                  }`}
+                >
+                  {link.label}
+                  <span
+                    className={`absolute left-3 right-3 -bottom-0.5 h-px bg-gradient-to-r from-primary to-secondary transition-transform duration-200 origin-left ${
+                      active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                    }`}
+                  />
+                </button>
+              )
+            })}
+
+            <div ref={dropdownRef} className="relative">
               <button
-                key={link.label}
-                onClick={() => scrollToSection(link.href.slice(1))}
-                className="group relative px-3 py-2 text-sm text-text-secondary hover:text-text-primary font-medium transition-colors"
+                type="button"
+                onClick={() => setIsDropdownOpen(o => !o)}
+                aria-expanded={isDropdownOpen}
+                aria-haspopup="menu"
+                className={`group relative inline-flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors ${
+                  moreActive || isDropdownOpen ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
+                }`}
               >
-                {link.label}
-                <span className="absolute left-3 right-3 -bottom-0.5 h-px bg-gradient-to-r from-primary to-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
+                More
+                <IconChevronDown width={14} height={14} className={`transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                <span
+                  className={`absolute left-3 right-3 -bottom-0.5 h-px bg-gradient-to-r from-primary to-secondary transition-transform duration-200 origin-left ${
+                    moreActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                  }`}
+                />
               </button>
-            ))}
-            <a
-              href={resumeLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 py-2 text-sm text-text-secondary hover:text-text-primary font-medium transition-colors"
-            >
-              Resume
-            </a>
+              {isDropdownOpen && (
+                <div
+                  role="menu"
+                  className="absolute right-0 top-full z-50 mt-3 w-52 rounded-2xl border border-border/70 bg-card/95 p-1.5 shadow-soft backdrop-blur animate-fade-in"
+                >
+                  {moreLinks.map(link => {
+                    const active = activeSection === link.href.slice(1)
+                    return (
+                      <button
+                        key={link.label}
+                        type="button"
+                        role="menuitem"
+                        onClick={() => scrollToSection(link.href.slice(1))}
+                        className={`w-full rounded-xl px-3 py-2 text-left text-sm font-medium transition-colors ${
+                          active ? 'bg-primary/10 text-primary' : 'text-text-secondary hover:bg-text-primary/[0.06] hover:text-text-primary'
+                        }`}
+                      >
+                        {link.label}
+                      </button>
+                    )
+                  })}
+                  <div className="my-1.5 h-px bg-border/70" />
+                  <a
+                    href={resumeLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    role="menuitem"
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="block rounded-xl px-3 py-2 text-sm font-medium text-text-secondary transition-colors hover:bg-text-primary/[0.06] hover:text-text-primary"
+                  >
+                    Resume
+                  </a>
+                </div>
+              )}
+            </div>
+
             <button
               onClick={() => scrollToSection('contact')}
-              className="ml-2 inline-flex items-center rounded-xl bg-gradient-to-r from-primary to-primary/80 text-white text-sm font-medium px-4 py-2 shadow-glow hover:-translate-y-0.5 transition-all duration-200"
+              className="ml-2 inline-flex items-center whitespace-nowrap rounded-xl bg-gradient-to-r from-primary to-primary/80 text-white text-sm font-medium px-4 py-2 shadow-glow hover:-translate-y-0.5 transition-all duration-200"
             >
               Start a project
             </button>
           </div>
 
-          {/* Mobile trigger */}
-          <div className="hidden md:block xl:hidden">
+          {/* Tablet menu trigger */}
+          <div className="hidden md:block lg:hidden">
             <Button
               variant="outline"
               size="icon"
@@ -158,11 +240,12 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
               {isMobileOpen ? <IconClose /> : <IconMenu />}
             </Button>
           </div>
+          </div>
         </div>
 
         {/* Mobile menu */}
         {isMobileOpen && (
-          <div className="hidden md:block xl:hidden mt-2 mb-4 space-y-1 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain glass rounded-2xl border border-border/60 p-2 shadow-soft">
+          <div className="hidden md:block lg:hidden mt-2 mb-4 space-y-1 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain glass rounded-2xl border border-border/60 p-2 shadow-soft">
             {navLinks.map(link => (
               <Button
                 key={link.label}
@@ -236,7 +319,7 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
                   type="button"
                   onClick={() => setIsMoreOpen(false)}
                   aria-label="Close"
-                  className="w-9 h-9 -mr-2 flex items-center justify-center rounded-full text-text-secondary hover:bg-white/[0.06]"
+                  className="w-9 h-9 -mr-2 flex items-center justify-center rounded-full text-text-secondary hover:bg-text-primary/[0.07]"
                 >
                   <IconClose />
                 </button>
@@ -254,7 +337,7 @@ export default function Header({ profile, hasCertifications = true, hasTestimoni
                           className={`w-full min-h-12 rounded-xl border px-3 py-2.5 text-left text-sm font-medium transition-colors ${
                             active
                               ? 'border-primary/60 bg-primary/10 text-text-primary'
-                              : 'border-border/60 text-text-secondary active:bg-white/[0.06]'
+                              : 'border-border/60 text-text-secondary active:bg-text-primary/[0.07]'
                           }`}
                         >
                           {link.label}

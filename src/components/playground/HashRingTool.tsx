@@ -154,7 +154,7 @@ export default function HashRingTool() {
               <li key={c.node} className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: colorOf(c.node) }} />
                 <span className="w-16 text-text-secondary">{c.node}</span>
-                <span className="flex-1 h-2 rounded-full bg-white/[0.06] overflow-hidden">
+                <span className="flex-1 h-2 rounded-full bg-text-primary/[0.07] overflow-hidden">
                   <span className="block h-full" style={{ width: `${(c.count / KEY_COUNT) * 100}%`, background: colorOf(c.node) }} />
                 </span>
                 <span className="w-8 text-right text-text-primary">{c.count}</span>

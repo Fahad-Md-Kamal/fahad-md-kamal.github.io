@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import DecodeText from './DecodeText'
 import Reveal from './Reveal'
+import { useTheme } from '@/lib/theme'
 
 interface BlogPost {
   slug: string
@@ -132,6 +133,7 @@ const renderMarkdown = (raw: string) => {
 const blogFiles = import.meta.glob('/src/blogs/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>
 
 export default function Blogs() {
+  const { resolved: resolvedTheme } = useTheme()
   const posts = useMemo<BlogPost[]>(() => {
     return Object.entries(blogFiles)
       .map(([path, raw]) => {
@@ -169,7 +171,10 @@ export default function Blogs() {
   useEffect(() => {
     if (!modalPost) return
     const root = document.getElementById(`blogs-${modalPost.slug}`)
-    const nodes = root ? Array.from(root.querySelectorAll<HTMLElement>('.mermaid-diagram[data-mermaid]')) : []
+    // Diagrams are drawn once per theme, so switching theme with a post open redraws them.
+    const nodes = root
+      ? Array.from(root.querySelectorAll<HTMLElement>('.mermaid-diagram[data-mermaid]')).filter(n => n.dataset.rendered !== resolvedTheme)
+      : []
     if (!nodes.length) return
 
     let cancelled = false
@@ -180,32 +185,33 @@ export default function Blogs() {
     ;(async () => {
       try {
         const { default: mermaid } = await import('mermaid')
+        const light = resolvedTheme === 'light'
         mermaid.initialize({
           startOnLoad: false,
           securityLevel: 'strict',
           theme: 'base',
           themeVariables: {
             fontFamily: 'Inter, system-ui, sans-serif',
-            primaryColor: '#16283a',
-            primaryTextColor: '#e6edf5',
-            primaryBorderColor: '#38bdf8',
-            secondaryColor: '#1b2230',
-            tertiaryColor: '#111827',
-            lineColor: '#7dd3fc',
-            textColor: '#cbd5e1',
-            edgeLabelBackground: '#0f141b',
-            clusterBkg: '#111827',
-            clusterBorder: '#334155',
+            primaryColor: light ? '#e0f2fe' : '#16283a',
+            primaryTextColor: light ? '#0f172a' : '#e6edf5',
+            primaryBorderColor: light ? '#0284c7' : '#38bdf8',
+            secondaryColor: light ? '#f1f5f9' : '#1b2230',
+            tertiaryColor: light ? '#f8fafc' : '#111827',
+            lineColor: light ? '#0369a1' : '#7dd3fc',
+            textColor: light ? '#334155' : '#cbd5e1',
+            edgeLabelBackground: light ? '#ffffff' : '#0f141b',
+            clusterBkg: light ? '#f1f5f9' : '#111827',
+            clusterBorder: light ? '#cbd5e1' : '#334155',
           },
           flowchart: { curve: 'basis', htmlLabels: true },
         })
         for (const [index, node] of nodes.entries()) {
           if (cancelled) return
           try {
-            const { svg } = await mermaid.render(`mermaid-${modalPost.slug}-${index}`, node.dataset.mermaid ?? '')
+            const { svg } = await mermaid.render(`mermaid-${modalPost.slug}-${resolvedTheme}-${index}`, node.dataset.mermaid ?? '')
             if (!cancelled) {
               node.innerHTML = svg
-              node.removeAttribute('data-mermaid')
+              node.dataset.rendered = resolvedTheme
             }
           } catch {
             if (!cancelled) showSource(node)
@@ -219,7 +225,7 @@ export default function Blogs() {
     return () => {
       cancelled = true
     }
-  }, [modalPost])
+  }, [modalPost, resolvedTheme])
 
   // Lock background scroll when modal is open
   useEffect(() => {

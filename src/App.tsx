@@ -12,6 +12,9 @@ import GithubActivity from './components/GithubActivity'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
+import { SideDock } from './components/SideDock'
+import { ThemeButtons } from './components/ThemeToggle'
+import { ContactButtons } from './components/ContactDock'
 import Blogs from './components/Blogs'
 import Services from './components/Services'
 import Testimonials from './components/Testimonials'
@@ -85,6 +88,10 @@ function App() {
       
       <Footer profile={profile} />
       <ScrollToTop />
+      <SideDock>
+        <ContactButtons profile={profile} />
+        <ThemeButtons />
+      </SideDock>
     </div>
   )
 }

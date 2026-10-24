@@ -193,7 +193,7 @@ export default function Experience({ experience, profile }: ExperienceProps) {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {stats.map((stat, index) => (
               <Reveal key={index} delay={index * 80} as={Card as any} className="text-center h-28 flex flex-col card-hover">
-                <CardContent className="flex-1 flex items-center justify-center p-4">
+                <CardContent className="flex-1 flex items-center justify-center px-4 pb-4 pt-4">
                     {stat.value.length <= 2 ? <DecodeText text={stat.value} className="w-full text-center text-5xl pb-0 font-display font-bold text-primary leading-tight block" /> : <DecodeText text={stat.value} className="w-full text-center text-lg font-display font-bold text-primary leading-tight block" />}
                 </CardContent>
                 <CardFooter className="text-xs text-muted-foreground py-2 px-4 border-t border-border/60 justify-center">

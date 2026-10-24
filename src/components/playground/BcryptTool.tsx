@@ -144,7 +144,7 @@ export default function BcryptTool() {
             {runs.map((run, i) => (
               <li key={`${run.cost}-${i}`} className="flex items-center gap-3 text-[13px] sm:text-sm font-mono">
                 <span className="w-14 text-text-secondary">cost {run.cost}</span>
-                <span className="flex-1 h-2 rounded-full bg-white/[0.06] overflow-hidden">
+                <span className="flex-1 h-2 rounded-full bg-text-primary/[0.07] overflow-hidden">
                   <span
                     className="block h-full rounded-full bg-gradient-to-r from-primary to-secondary"
                     style={{ width: `${Math.max(2, (run.ms / maxMs) * 100)}%` }}

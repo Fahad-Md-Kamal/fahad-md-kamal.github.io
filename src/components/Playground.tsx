@@ -161,7 +161,7 @@ export default function Playground() {
                           onClick={() => setOpenGroup(open ? null : g.id)}
                           aria-expanded={open}
                           aria-controls={`group-${g.id}`}
-                          className="w-full flex items-center justify-between gap-2 px-3 py-2.5 text-left hover:bg-white/[0.04] transition-colors"
+                          className="w-full flex items-center justify-between gap-2 px-3 py-2.5 text-left hover:bg-text-primary/[0.05] transition-colors"
                         >
                           <span className="flex items-center gap-2 min-w-0">
                             <span
@@ -191,7 +191,7 @@ export default function Playground() {
                                     className={`w-full flex items-center gap-3 rounded-lg border-l-2 px-3 py-2 text-left text-sm transition-colors ${
                                       active
                                         ? 'border-primary bg-primary/10 text-text-primary'
-                                        : 'border-transparent text-text-secondary hover:bg-white/[0.04] hover:text-text-primary'
+                                        : 'border-transparent text-text-secondary hover:bg-text-primary/[0.05] hover:text-text-primary'
                                     }`}
                                   >
                                     <span className="text-base w-5 text-center" aria-hidden="true">{t.icon}</span>
@@ -253,7 +253,7 @@ export default function Playground() {
                             type="button"
                             onClick={() => openInSheet(t.id)}
                             aria-haspopup="dialog"
-                            className="w-full flex items-center gap-3.5 rounded-2xl border border-border/60 bg-card/50 px-3.5 py-3 text-left transition-colors active:bg-white/[0.06] hover:border-primary/40"
+                            className="w-full flex items-center gap-3.5 rounded-2xl border border-border/60 bg-card/50 px-3.5 py-3 text-left transition-colors active:bg-text-primary/[0.07] hover:border-primary/40"
                           >
                             <span className="w-11 h-11 shrink-0 rounded-xl border border-border/60 bg-background/50 flex items-center justify-center text-xl" aria-hidden="true">
                               {t.icon}
@@ -293,7 +293,7 @@ export default function Playground() {
                           type="button"
                           onClick={closeSheet}
                           aria-label="Close"
-                          className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full text-text-secondary hover:bg-white/[0.06]"
+                          className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full text-text-secondary hover:bg-text-primary/[0.07]"
                         >
                           <IconClose />
                         </button>

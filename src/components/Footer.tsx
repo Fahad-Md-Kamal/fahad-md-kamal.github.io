@@ -1,8 +1,15 @@
+import type { ComponentType, SVGProps } from 'react'
 import type { Profile } from '../types'
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { Badge } from "@/components/ui/badge"
-import { IconArrowDown } from "@/components/icons"
+import {
+  IconArrowDown,
+  IconGithub,
+  IconLinkedin,
+  IconMail,
+  IconTelegram,
+  IconWhatsapp,
+  IconX,
+} from '@/components/icons'
+import { whatsappGreeting, whatsappLink } from '@/lib/whatsapp'
 import DecodeText from './DecodeText'
 import Reveal from './Reveal'
 
@@ -10,122 +17,131 @@ interface FooterProps {
   profile: Profile
 }
 
+type IconType = ComponentType<SVGProps<SVGSVGElement>>
+
+const EXPLORE_LINKS = [
+  { label: 'About', id: 'about' },
+  { label: 'Skills', id: 'skills' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Services', id: 'services' },
+  { label: 'Experience', id: 'experience' },
+  { label: 'Blog', id: 'blogs' },
+  { label: 'Playground', id: 'playground' },
+  { label: 'Contact', id: 'contact' },
+]
+
+const AVAILABILITY: Record<Profile['availability']['status'], { label: string; dot: string; tone: string }> = {
+  open: { label: 'Available for new projects', dot: 'bg-green-500 animate-pulse', tone: 'border-green-500/25 bg-green-500/10 text-green-400' },
+  busy: { label: 'Limited availability', dot: 'bg-amber-500', tone: 'border-amber-500/30 bg-amber-500/10 text-amber-400' },
+  closed: { label: 'Not taking new work', dot: 'bg-text-secondary', tone: 'border-border/60 bg-surface text-text-secondary' },
+}
+
 export default function Footer({ profile }: FooterProps) {
   const currentYear = new Date().getFullYear()
-  
-  const footerSections = [
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Contact', href: '#contact' },
+  const availability = AVAILABILITY[profile.availability.status] ?? AVAILABILITY.open
+
+  const goTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  const goToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
+  // Icon buttons where we have an icon; the rest fall back to a short mono label.
+  const connect: { label: string; href: string; Icon?: IconType; short?: string }[] = [
+    { label: 'Email', href: `mailto:${profile.contact?.email || profile.email}`, Icon: IconMail },
+    {
+      label: 'WhatsApp',
+      href: whatsappLink(profile.contact?.phone || profile.phone, whatsappGreeting(profile.name)),
+      Icon: IconWhatsapp,
+    },
+    { label: 'LinkedIn', href: profile.social.linkedin, Icon: IconLinkedin },
+    { label: 'GitHub', href: profile.social.github, Icon: IconGithub },
+    ...(profile.social.telegram ? [{ label: 'Telegram', href: profile.social.telegram, Icon: IconTelegram }] : []),
+    { label: 'X (Twitter)', href: profile.social.twitter, Icon: IconX },
+    { label: 'Medium', href: profile.social.medium, short: 'M' },
+    { label: 'Stack Overflow', href: profile.social.stackoverflow, short: 'SO' },
   ]
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
   return (
-    <footer className="bg-surface/90 border-t border-border/60">
+    <footer className="border-t border-border/60 bg-surface/90">
       <div className="section-container">
-        <div className="max-w-6xl mx-auto py-16 md:py-20">
-          {/* System Info */}
-          <Reveal className="grid md:grid-cols-3 gap-12 mb-12">
-            {/* Engineer Identity */}
+        <div className="mx-auto max-w-6xl py-12 md:py-16">
+          <Reveal className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr] md:gap-12">
+            {/* Identity */}
             <div>
-              <Button
-                variant="ghost"
-                onClick={scrollToTop}
-                className="font-display text-lg font-semibold mb-4 text-text-primary hover:text-primary transition-colors p-0 h-auto"
-              >
-                {profile.name}
-              </Button>
-              <p className="text-text-secondary text-sm leading-relaxed mb-6">
-                Senior software engineer specializing in Python and Go backends
-                and AI-driven solutions.
+              <button type="button" onClick={goToTop} className="group flex items-center gap-3 text-left" aria-label="Back to top">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary font-display text-sm font-bold text-primary-foreground shadow-glow transition-transform duration-200 group-hover:scale-105">
+                  {profile.name.split(' ').map(word => word[0]).join('')}
+                </span>
+                <span>
+                  <span className="block font-display text-lg font-semibold leading-tight text-text-primary transition-colors group-hover:text-primary">
+                    {profile.name}
+                  </span>
+                  <span className="block text-xs font-mono text-text-secondary">{profile.role}</span>
+                </span>
+              </button>
+              <p className="mt-4 max-w-sm text-sm leading-relaxed text-text-secondary">
+                Senior software engineer specializing in Python and Go backends and AI-driven solutions.
               </p>
-
-              {/* Technical Links */}
-              <div className="flex gap-2.5">
-                {Object.entries(profile.social).map(([platform, url]) => {
-                  if (platform === 'portfolio') return null // Skip portfolio link
-                  const labelMap: Record<string, string> = {
-                    github: 'GH',
-                    linkedin: 'IN',
-                    twitter: 'X',
-                    medium: 'M',
-                    stackoverflow: 'SO',
-                    telegram: 'TG',
-                  }
-                  return (
-                    <a
-                      key={platform}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-9 h-9 bg-surface border border-border/60 rounded-xl flex items-center justify-center text-text-secondary hover:border-primary/50 hover:text-primary hover:-translate-y-0.5 transition-all duration-200"
-                      aria-label={`${platform} profile`}
-                    >
-                      <DecodeText text={labelMap[platform] || platform.slice(0, 2).toUpperCase()} className="font-mono text-xs" />
-                    </a>
-                  )
-                })}
-              </div>
+              <span
+                className={`mt-5 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium ${availability.tone}`}
+              >
+                <span className={`h-2 w-2 rounded-full ${availability.dot}`} aria-hidden="true" />
+                {availability.label}
+              </span>
             </div>
 
-            {/* Navigation Interface */}
-            <div>
+            {/* Explore */}
+            <nav aria-label="Footer">
               <h3 className="section-eyebrow">
-                <DecodeText text="Navigation" />
+                <DecodeText text="Explore" />
               </h3>
-              <ul className="space-y-3">
-                {footerSections.map((section) => (
-                  <li key={section.label}>
-                    <Button
-                      variant="ghost"
-                      onClick={() => scrollToSection(section.href.slice(1))}
-                      className="text-sm text-text-secondary hover:text-text-primary transition-colors flex items-center gap-2 group p-0 h-auto justify-start"
+              <ul className="grid grid-cols-2 gap-x-6 gap-y-0.5">
+                {EXPLORE_LINKS.map(link => (
+                  <li key={link.id}>
+                    <a
+                      href={`#${link.id}`}
+                      onClick={e => {
+                        e.preventDefault()
+                        goTo(link.id)
+                      }}
+                      className="group flex items-center gap-2 py-2 text-sm text-text-secondary transition-colors hover:text-text-primary"
                     >
-                      <span className="w-1 h-1 bg-text-secondary/50 rounded-full group-hover:bg-primary"></span>
-                      {section.label}
-                    </Button>
+                      <span className="h-1 w-1 rounded-full bg-text-secondary/50 transition-colors group-hover:bg-primary" aria-hidden="true" />
+                      {link.label}
+                    </a>
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
 
-            {/* System Status */}
+            {/* Connect */}
             <div>
               <h3 className="section-eyebrow">
-                <DecodeText text="Status" />
+                <DecodeText text="Connect" />
               </h3>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <Badge variant="outline" className="bg-green-500/10 border-green-500/20 text-green-400">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
-                    Available for hire
-                  </Badge>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Badge variant="outline" className="bg-primary/10 border-primary/20 text-primary">
-                    <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
-                    Accepting projects
-                  </Badge>
-                </div>
+              <ul className="grid grid-cols-4 gap-2.5 sm:flex sm:flex-wrap">
+                {connect.map(({ label, href, Icon, short }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      target={href.startsWith('mailto:') ? undefined : '_blank'}
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      title={label}
+                      className="flex h-11 w-full items-center justify-center rounded-xl border border-border/60 bg-background/40 text-text-secondary transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/50 hover:text-primary sm:h-10 sm:w-10"
+                    >
+                      {Icon ? <Icon width={18} height={18} /> : <span className="font-mono text-xs">{short}</span>}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1">
                 <a
                   href={profile.resumeUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex w-fit items-center gap-2 py-1.5 text-primary hover:text-primary/80 transition-colors text-sm group"
+                  className="group flex items-center gap-2 py-2 text-sm text-primary transition-colors hover:text-primary/80"
                 >
-                  <IconArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
+                  <IconArrowDown className="h-3.5 w-3.5 transition-transform group-hover:translate-y-0.5" />
                   Resume (PDF)
                 </a>
                 {profile.resumeFallbackUrl && (
@@ -133,7 +149,7 @@ export default function Footer({ profile }: FooterProps) {
                     href={profile.resumeFallbackUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-fit py-1.5 text-xs text-text-secondary hover:text-primary transition-colors"
+                    className="py-2 text-xs text-text-secondary transition-colors hover:text-primary"
                   >
                     Online version
                   </a>
@@ -142,14 +158,19 @@ export default function Footer({ profile }: FooterProps) {
             </div>
           </Reveal>
 
-          {/* Terminal Footer */}
-          <div className="text-center">
-            <Separator className="mb-8 bg-border/60" />
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-text-secondary">
-              <div>
-                © {currentYear} {profile.name} — All rights reserved
-              </div>
-            </div>
+          {/* Bottom bar */}
+          <div className="mt-10 flex flex-col-reverse items-start justify-between gap-3 border-t border-border/60 pt-6 text-xs text-text-secondary sm:flex-row sm:items-center">
+            <p>
+              © {currentYear} {profile.name} — All rights reserved
+            </p>
+            <button
+              type="button"
+              onClick={goToTop}
+              className="group inline-flex items-center gap-2 py-1 transition-colors hover:text-primary"
+            >
+              Back to top
+              <IconArrowDown className="h-3.5 w-3.5 rotate-180 transition-transform group-hover:-translate-y-0.5" />
+            </button>
           </div>
         </div>
       </div>

@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { IconMail, IconGithub, IconLinkedin, IconTelegram, IconExternalLink, IconCheckCircle, IconAlertCircle } from '@/components/icons'
+import { IconMail, IconGithub, IconLinkedin, IconTelegram, IconWhatsapp, IconExternalLink, IconCheckCircle, IconAlertCircle } from '@/components/icons'
+import { whatsappLink, whatsappGreeting } from '@/lib/whatsapp'
 import DecodeText from './DecodeText'
 import Reveal from './Reveal'
 
@@ -68,22 +69,30 @@ export default function Contact({ profile }: ContactProps) {
       Icon: IconMail,
       label: 'Email',
       value: profile.contact?.email || profile.email,
+      wide: true,
       href: `mailto:${profile.contact?.email || profile.email}`,
       description: 'Direct technical communication'
     },
     {
       Icon: IconGithub,
       label: 'GitHub',
-      value: 'Technical portfolio & repositories',
+      value: 'Code & projects',
       href: profile.social.github,
       description: 'Code samples and project architecture'
     },
     {
       Icon: IconLinkedin,
       label: 'LinkedIn',
-      value: 'Professional networking',
+      value: 'Connect with me',
       href: profile.social.linkedin,
       description: 'Career timeline and recommendations'
+    },
+    {
+      Icon: IconWhatsapp,
+      label: 'WhatsApp',
+      value: 'Say hello',
+      href: whatsappLink(profile.contact?.phone || profile.phone, whatsappGreeting(profile.name)),
+      description: 'Opens a chat with a hello already written'
     },
     ...(profile.social.telegram ? [{
       Icon: IconTelegram,
@@ -113,7 +122,7 @@ export default function Contact({ profile }: ContactProps) {
             {/* Contact Methods */}
             <Reveal className="space-y-8 min-w-0">
               <Card>
-                <CardContent className="p-4 flex items-center gap-4">
+                <CardContent className="flex items-center gap-4 px-4 pb-4 pt-4">
                   <div className="w-14 h-14 rounded-full overflow-hidden border border-border/60 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center flex-shrink-0">
                     {!avatarError ? (
                       <img
@@ -143,33 +152,28 @@ export default function Contact({ profile }: ContactProps) {
                     <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="grid grid-cols-2 gap-2.5">
                   {contactMethods.map((method, index) => (
                     <Reveal
-                      key={index}
-                      delay={index * 80}
-                      className="group rounded-xl border border-border/60 bg-background/30 hover:border-primary/40 hover:bg-background/50 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
-                      onClick={() => window.open(method.href, '_blank')}
+                      as="a"
+                      key={method.label}
+                      delay={index * 60}
+                      href={method.href}
+                      target={method.href.startsWith('mailto:') ? undefined : '_blank'}
+                      rel="noopener noreferrer"
+                      title={method.description}
+                      className={`group flex min-w-0 items-center gap-3 rounded-xl border border-border/60 bg-background/30 px-3 py-2.5 hover:border-primary/40 hover:bg-background/50 active:bg-background/60 ${
+                        method.wide ? 'col-span-2' : ''
+                      }`}
                     >
-                      <div className="p-4">
-                        <div className="flex items-start gap-4">
-                          <div className="w-10 h-10 bg-surface border border-border/60 rounded-xl flex items-center justify-center text-primary group-hover:text-primary/80 flex-shrink-0">
-                            <method.Icon className="w-5 h-5" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <h3 className="font-semibold text-text-primary">
-                                {method.label}
-                              </h3>
-                            </div>
-                            <DecodeText text={method.value} className="text-sm text-text-secondary mb-2 block break-all" />
-                            <p className="text-xs text-text-secondary">
-                              {method.description}
-                            </p>
-                          </div>
-                          <IconExternalLink className="w-4 h-4 text-text-secondary group-hover:text-primary transition-colors flex-shrink-0" />
-                        </div>
-                      </div>
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border/60 bg-surface text-primary">
+                        <method.Icon className="h-[18px] w-[18px]" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm font-semibold text-text-primary leading-tight">{method.label}</span>
+                        <span className={`truncate text-xs text-text-secondary ${method.wide ? 'block' : 'hidden sm:block'}`}>{method.value}</span>
+                      </span>
+                      <IconExternalLink className={`h-3.5 w-3.5 shrink-0 text-text-secondary transition-colors group-hover:text-primary ${method.wide ? '' : 'hidden sm:block'}`} />
                     </Reveal>
                   ))}
                 </CardContent>

@@ -146,3 +146,42 @@ export const IconGrid = (props: IconProps) => (
     <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" />
   </svg>
 )
+
+export const IconSun = (props: IconProps) => (
+  <svg {...base(props)}>
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" />
+  </svg>
+)
+
+export const IconMoon = (props: IconProps) => (
+  <svg {...base(props)}>
+    <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" />
+  </svg>
+)
+
+export const IconMonitor = (props: IconProps) => (
+  <svg {...base(props)}>
+    <rect x="3" y="4" width="18" height="12" rx="2" />
+    <path d="M8 20h8M12 16v4" />
+  </svg>
+)
+
+export const IconChevronLeft = (props: IconProps) => (
+  <svg {...base(props)}>
+    <path d="m15 5-7 7 7 7" />
+  </svg>
+)
+
+export const IconChevronDown = (props: IconProps) => (
+  <svg {...base(props)}>
+    <path d="m6 9 6 6 6-6" />
+  </svg>
+)
+
+export const IconWhatsapp = (props: IconProps) => (
+  <svg {...base(props)} strokeWidth={1.6}>
+    <path d="M3.5 20.5 5 16A8.5 8.5 0 1 1 8 19l-4.5 1.5Z" />
+    <path d="M9.3 8.6c.2-.4.6-.4.8 0l.7 1.4c.1.3 0 .5-.2.7l-.5.5c.6 1.2 1.5 2.1 2.7 2.7l.5-.6c.2-.2.5-.3.7-.1l1.4.7c.4.2.4.6 0 1-.6.7-1.5.9-2.3.6-2.3-.8-4-2.5-4.8-4.8-.2-.8 0-1.6.5-2.1Z" />
+  </svg>
+)

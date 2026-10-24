@@ -31,35 +31,37 @@
     --text-primary: 220 20% 93%;
     --text-secondary: 220 12% 68%;
     --surface: 222 26% 10%;
+    color-scheme: dark;
   }
   
   .light {
-    --background: 0 0% 100%;
-    --foreground: 220 13% 9%;
+    --background: 210 40% 98%;
+    --foreground: 222 30% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 220 13% 9%;
+    --card-foreground: 222 30% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 9%;
-    --primary: 199 89% 48%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 220 13% 91%;
-    --secondary-foreground: 220 13% 9%;
-    --muted: 220 13% 91%;
-    --muted-foreground: 220 9% 66%;
-    --accent: 220 13% 91%;
-    --accent-foreground: 220 13% 9%;
-    --destructive: 0 84% 50%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 199 89% 48%;
-    --chart-1: 199 89% 48%;
-    --chart-2: 267 85% 78%;
-    --chart-3: 220 26% 14%;
-    --chart-4: 220 9% 66%;
-    --chart-5: 215 28% 17%;
-    --text-primary: 220 13% 9%;
-    --text-secondary: 220 9% 46%;
-    --surface: 220 13% 96%;
+    --popover-foreground: 222 30% 11%;
+    --primary: 199 89% 37%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 262 62% 52%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 214 32% 93%;
+    --muted-foreground: 215 16% 38%;
+    --accent: 214 32% 93%;
+    --accent-foreground: 222 30% 11%;
+    --destructive: 0 72% 46%;
+    --border: 214 24% 84%;
+    --input: 214 24% 84%;
+    --ring: 199 89% 37%;
+    --chart-1: 199 89% 37%;
+    --chart-2: 262 62% 52%;
+    --chart-3: 214 32% 93%;
+    --chart-4: 215 16% 38%;
+    --chart-5: 214 24% 84%;
+    --text-primary: 222 30% 11%;
+    --text-secondary: 215 16% 36%;
+    --surface: 214 32% 95%;
+    color-scheme: light;
   }
 }
 
@@ -222,3 +224,11 @@
   max-width: 100%;
   height: auto;
 }
+
+/* Status colours are picked for dark backgrounds; deepen them so they stay readable on light ones. */
+.light .text-green-400 { color: #15803d; }
+.light .text-red-400 { color: #b91c1c; }
+.light .text-amber-400 { color: #b45309; }
+.light .bg-green-500\/10,
+.light .bg-green-500\/15 { background-color: rgb(22 163 74 / 0.12); }
+.light ::selection { background-color: hsl(var(--primary) / 0.25); }

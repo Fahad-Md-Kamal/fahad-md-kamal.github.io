@@ -58,7 +58,7 @@ export const TabsTrigger = ({
       }}
       className={cn(
         "px-3 py-1.5 rounded-xl border border-transparent transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary/60",
-        active ? "bg-gradient-to-r from-primary to-primary/80 text-white shadow-glow" : "text-text-secondary hover:text-text-primary hover:bg-white/[0.04]",
+        active ? "bg-gradient-to-r from-primary to-primary/80 text-white shadow-glow" : "text-text-secondary hover:text-text-primary hover:bg-text-primary/[0.05]",
         className
       )}
       aria-pressed={active}

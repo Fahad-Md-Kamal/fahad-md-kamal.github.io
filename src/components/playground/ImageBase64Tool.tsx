@@ -207,7 +207,7 @@ export default function ImageBase64Tool() {
                   src={dataUri}
                   alt="Preview of the chosen image"
                   onLoad={e => setDimensions({ w: e.currentTarget.naturalWidth, h: e.currentTarget.naturalHeight })}
-                  className="h-20 w-20 object-contain rounded-lg bg-white/5 border border-border/60"
+                  className="h-20 w-20 object-contain rounded-lg bg-text-primary/5 border border-border/60"
                 />
                 <div className="text-[13px] sm:text-sm font-mono min-w-0">
                   <div className="text-text-primary break-all">{fileInfo.name}</div>
@@ -247,7 +247,7 @@ export default function ImageBase64Tool() {
                   src={decoded.uri}
                   alt="Decoded image"
                   onError={() => { setDecoded(null); setError('That Base64 is not a readable image.') }}
-                  className="max-h-72 max-w-full object-contain rounded-lg bg-white/5"
+                  className="max-h-72 max-w-full object-contain rounded-lg bg-text-primary/5"
                 />
                 <p className="text-xs font-mono text-text-secondary">{decoded.mime} · about {formatSize(decoded.bytes)}</p>
               </div>
