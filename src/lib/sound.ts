@@ -2,7 +2,7 @@ import { useSyncExternalStore } from 'react'
 
 // Small UI sounds synthesized with the Web Audio API, so there are no audio files to download.
 // Everything is kept quiet and short. Browsers only allow audio after the visitor has interacted
-// with the page, so nothing plays until their first tap or key press.
+// with the page, and nothing plays at all until they switch sound on.
 
 const STORAGE_KEY = 'sound'
 const VOLUME_KEY = 'soundVolume'
@@ -10,11 +10,12 @@ const DEFAULT_VOLUME = 0.2 // a soft start; visitors can raise it with the slide
 
 const listeners = new Set<() => void>()
 
+// Sound is off until a visitor turns it on with the speaker button, and the choice is remembered.
 const readEnabled = (): boolean => {
   try {
-    return localStorage.getItem(STORAGE_KEY) !== 'off'
+    return localStorage.getItem(STORAGE_KEY) === 'on'
   } catch {
-    return true
+    return false
   }
 }
 

@@ -1,28 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useActiveSection } from '@/hooks/useActiveSection'
-import { useEffectsEnabled } from '@/lib/effects'
 import { playTap, useSoundEnabled, useSoundVolume } from '@/lib/sound'
 import { IconVolume, IconVolumeOff } from './icons'
 
-// A speaker button that shows up on the page while the fireworks play (the Contact section), so
-// the volume is easy to find exactly when it matters, and fades away in the other sections.
+// A speaker button that is always on the page, so sound can be switched on (it starts off) and the
+// volume adjusted from anywhere.
 // With a mouse, hovering the button slides a vertical volume slider up above it. On touch screens
 // there is no hover: a tap opens the slider, another tap on the button mutes, and tapping
 // anywhere else closes it.
 export default function SoundControl() {
-  const section = useActiveSection()
-  const { enabled: effects } = useEffectsEnabled()
   const { enabled: sound, setEnabled: setSound } = useSoundEnabled()
   const { volume, setVolume } = useSoundVolume()
-  const reduceMotion = useMemo(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches, [])
   const canHover = useMemo(() => window.matchMedia('(hover: hover)').matches, [])
 
   const [open, setOpen] = useState(false) // only used where there is no hover
   const rootRef = useRef<HTMLDivElement>(null)
   const lastPreview = useRef(0)
 
-  // The fireworks scene is the Contact section, and only runs with effects on and motion allowed.
-  const visible = section === 'contact' && effects && !reduceMotion
   const audible = sound && volume > 0
 
   useEffect(() => {
@@ -38,11 +31,6 @@ export default function SoundControl() {
       window.removeEventListener('keydown', onKey)
     }
   }, [open])
-
-  // Leaving the section closes the slider too.
-  useEffect(() => {
-    if (!visible) setOpen(false)
-  }, [visible])
 
   const onButton = () => {
     if (!canHover && !open) setOpen(true)
@@ -62,10 +50,7 @@ export default function SoundControl() {
     <div
       ref={rootRef}
       data-sound-control
-      aria-hidden={!visible}
-      className={`group fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-3 z-40 transition-[opacity,transform,visibility] duration-300 md:bottom-6 md:right-6 ${
-        visible ? 'visible translate-y-0 opacity-100' : 'invisible translate-y-3 opacity-0'
-      }`}
+      className="group fixed bottom-[calc(4.75rem+env(safe-area-inset-bottom))] right-3 z-40 md:bottom-6 md:right-6"
     >
       {/* The vertical slider: the padding underneath bridges the gap, so moving the mouse onto it keeps it open */}
       <div
